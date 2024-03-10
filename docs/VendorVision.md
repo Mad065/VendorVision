@@ -38,7 +38,7 @@ Normalmente los dueños de esta tienda de abarrotes registran el conteo de produ
 
 El modelo de cascada es una metodología para la gestión de proyectos en el que el proyecto se divide en distintas fases secuenciales y donde el equipo puede pasar a la siguiente fase solo cuando se haya completado la anterior.
 
-![](img/Modelo de cascada.svg)
+![](img/Modelo de cascada.png)
 
 ## Definición del problema, objetivo del proyecto usuarios.
 
