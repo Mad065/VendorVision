@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xl="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" xmlns:dc="http://purl.org/dc/elements/1.1/" version="1.1" viewBox="-12 -1 2202 638" width="2202" height="638">
+  <defs>
+    <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="FilledArrow_Marker" stroke-linejoin="miter" stroke-miterlimit="10" viewBox="-1 -4 10 8" markerWidth="10" markerHeight="8" color="black">
+      <g>
+        <path d="M 8 0 L 0 -3 L 0 3 Z" fill="currentColor" stroke="currentColor" stroke-width="1"/>
+      </g>
+    </marker>
+    <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="FilledArrow_Marker_2" stroke-linejoin="miter" stroke-miterlimit="10" viewBox="-1 -4 10 8" markerWidth="10" markerHeight="8" color="black">
+      <g>
+        <path d="M 8 0 L 0 -3 L 0 3 Z" fill="currentColor" stroke="currentColor" stroke-width="1"/>
+      </g>
+    </marker>
+  </defs>
+  <g id="Diagram" stroke-dasharray="none" stroke-opacity="1" fill-opacity="1" fill="none" stroke="none">
+    <title>Diagram</title>
+    <g id="Diagram_Layer_1">
+      <title>Layer 1</title>
+      <g id="Line_1328">
+        <path d="M 514.34654 494 L 514.34654 504 L 514.2599 544 L 514.17327 579.1 L 514.17327 584.1" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="square" stroke-linejoin="bevel" stroke-width="1"/>
+      </g>
+      <g id="Line_1326">
+        <path d="M 1204.3465 334 L 1204.3465 388.5 L 514.34654 388.5 L 514.34654 424.1" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="square" stroke-linejoin="bevel" stroke-width="1"/>
+      </g>
+      <g id="Line_1325">
+        <path d="M 514.34654 494 L 514.34654 504 L 514.2599 544 L 284.17327 544 L 284.17327 584.1" marker-end="url(#FilledArrow_Marker_2)" stroke="black" stroke-linecap="square" stroke-linejoin="bevel" stroke-width="1"/>
+      </g>
+      <g id="Line_1323">
+        <path d="M 514.34654 494 L 514.34654 504 L 514.2599 544 L 54.17327 544 L 54.17327 584.1" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="square" stroke-linejoin="bevel" stroke-width="1"/>
+      </g>
+      <g id="Line_1315">
+        <path d="M 1664.3465 334 L 1664.3465 384 L 1894.3465 384 L 1894.3465 424.1" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="square" stroke-linejoin="bevel" stroke-width="1"/>
+      </g>
+      <g id="Line_1313">
+        <path d="M 1319.3465 192 L 1319.3465 242 L 1664.3465 242 L 1664.3465 282.1" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="square" stroke-linejoin="bevel" stroke-width="1"/>
+      </g>
+      <g id="Line_1308">
+        <line x1="1319.3465" y1="50" x2="1319.3465" y2="140.1" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="square" stroke-linejoin="bevel" stroke-width="1"/>
+      </g>
+      <g id="Graphic_1216">
+        <rect x="1139.5198" y="292" width="129.65346" height="42" fill="#3a8eed"/>
+        <rect x="1139.5198" y="292" width="129.65346" height="42" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(1145.5198 304)" fill="black">
+          <tspan font-family="Avenir" font-size="13" fill="black" x="34.620733" y="13">Gerente</tspan>
+        </text>
+      </g>
+      <g id="Graphic_1322">
+        <rect x="-10.653463" y="594" width="129.65346" height="42" fill="#ff4040"/>
+        <rect x="-10.653463" y="594" width="129.65346" height="42" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(-4.653463 606)" fill="black">
+          <tspan font-family="Avenir" font-size="13" fill="black" x="32.235233" y="13">Registrar</tspan>
+        </text>
+      </g>
+      <g id="Graphic_1327">
+        <rect x="449.5198" y="434" width="129.65346" height="60" fill="#00bfc0"/>
+        <rect x="449.5198" y="434" width="129.65346" height="60" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(455.5198 446)" fill="black">
+          <tspan font-family="Avenir" font-size="13" fill="black" x="26.437233" y="13">Gestión de </tspan>
+          <tspan font-family="Avenir" font-size="13" fill="black" x="28.835733" y="31">productos</tspan>
+        </text>
+      </g>
+      <g id="Graphic_1324">
+        <rect x="219.34654" y="594" width="129.65346" height="42" fill="#ff4040"/>
+        <rect x="219.34654" y="594" width="129.65346" height="42" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(225.34654 606)" fill="black">
+          <tspan font-family="Avenir" font-size="13" fill="black" x="30.909233" y="13">Modificar</tspan>
+        </text>
+      </g>
+      <g id="Graphic_1329">
+        <rect x="449.34654" y="594" width="129.65346" height="42" fill="#ff4040"/>
+        <rect x="449.34654" y="594" width="129.65346" height="42" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(455.34654 606)" fill="black">
+          <tspan font-family="Avenir" font-size="13" fill="black" x="42.440233" y="13">Stock</tspan>
+        </text>
+      </g>
+      <g id="Graphic_1309">
+        <rect x="1254.5198" y="150" width="129.65346" height="42" fill="#ff914d"/>
+        <rect x="1254.5198" y="150" width="129.65346" height="42" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(1260.5198 162)" fill="black">
+          <tspan font-family="Avenir" font-size="13" fill="black" x="13.671233" y="13">Inicio de sesión</tspan>
+        </text>
+      </g>
+      <g id="Graphic_1314">
+        <rect x="1599.5198" y="292" width="129.65346" height="42" fill="#3a8eed"/>
+        <rect x="1599.5198" y="292" width="129.65346" height="42" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(1605.5198 304)" fill="black">
+          <tspan font-family="Avenir" font-size="13" fill="black" x="28.107733" y="13">Proveedor</tspan>
+        </text>
+      </g>
+      <g id="Graphic_1312">
+        <rect x="1829.5198" y="434" width="129.65346" height="60" fill="#00bfc0"/>
+        <rect x="1829.5198" y="434" width="129.65346" height="60" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(1835.5198 446)" fill="black">
+          <tspan font-family="Avenir" font-size="13" fill="black" x="26.437233" y="13">Gestión de </tspan>
+          <tspan font-family="Avenir" font-size="13" fill="black" x="32.820233" y="31">gerentes</tspan>
+        </text>
+      </g>
+      <g id="Line_1215">
+        <path d="M 1319.3465 192 L 1319.3465 242 L 1204.3465 242 L 1204.3465 282.1" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="square" stroke-linejoin="bevel" stroke-width="1"/>
+      </g>
+      <g id="Graphic_1214">
+        <rect x="1254.5198" y="0" width="129.6535" height="50" fill="#f26077"/>
+        <rect x="1254.5198" y="0" width="129.6535" height="50" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(1260.5198 16)" fill="black">
+          <tspan font-family="Avenir" font-size="13" fill="black" x="20.164752" y="13">VendorVision</tspan>
+        </text>
+      </g>
+      <g id="Graphic_1337">
+        <rect x="1139.5198" y="443" width="129.65346" height="42" fill="#00bfc0"/>
+        <rect x="1139.5198" y="443" width="129.65346" height="42" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(1145.5198 455)" fill="black">
+          <tspan font-family="Avenir" font-size="13" fill="black" x="5.7217326" y="13">Gestión de dinero</tspan>
+        </text>
+      </g>
+      <g id="Line_1339">
+        <line x1="1204.3465" y1="334" x2="1204.3465" y2="433.1" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="square" stroke-linejoin="bevel" stroke-width="1"/>
+      </g>
+      <g id="Graphic_1342">
+        <rect x="909.5198" y="594" width="129.65346" height="42" fill="#ff4040"/>
+        <rect x="909.5198" y="594" width="129.65346" height="42" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(915.5198 606)" fill="black">
+          <tspan font-family="Avenir" font-size="13" fill="black" x="32.215733" y="13">Compras</tspan>
+        </text>
+      </g>
+      <g id="Graphic_1343">
+        <rect x="1139.5198" y="594" width="129.65346" height="42" fill="#ff4040"/>
+        <rect x="1139.5198" y="594" width="129.65346" height="42" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(1145.5198 606)" fill="black">
+          <tspan font-family="Avenir" font-size="13" fill="black" x="39.196733" y="13">Ventas</tspan>
+        </text>
+      </g>
+      <g id="Graphic_1344">
+        <rect x="1369.5198" y="594" width="129.65346" height="42" fill="#ff4040"/>
+        <rect x="1369.5198" y="594" width="129.65346" height="42" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(1375.5198 606)" fill="black">
+          <tspan font-family="Avenir" font-size="13" fill="black" x="24.415733" y="13">Estadísticas</tspan>
+        </text>
+      </g>
+      <g id="Line_1345">
+        <path d="M 1204.3465 485 L 1204.3465 539.5 L 1434.3465 539.5 L 1434.3465 584.1" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="square" stroke-linejoin="bevel" stroke-width="1"/>
+      </g>
+      <g id="Line_1346">
+        <path d="M 1204.3465 485 L 1204.3465 539.5 L 974.3465 539.5 L 974.3465 584.1" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="square" stroke-linejoin="bevel" stroke-width="1"/>
+      </g>
+      <g id="Line_1347">
+        <line x1="1204.3465" y1="485" x2="1204.3465" y2="584.1" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="square" stroke-linejoin="bevel" stroke-width="1"/>
+      </g>
+      <g id="Graphic_1348">
+        <rect x="1599.5198" y="594" width="129.65346" height="42" fill="#ff4040"/>
+        <rect x="1599.5198" y="594" width="129.65346" height="42" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(1605.5198 606)" fill="black">
+          <tspan font-family="Avenir" font-size="13" fill="black" x="35.108233" y="13">Pedidos</tspan>
+        </text>
+      </g>
+      <g id="Graphic_1349">
+        <rect x="1829.5198" y="594" width="129.65346" height="42" fill="#ff4040"/>
+        <rect x="1829.5198" y="594" width="129.65346" height="42" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(1835.5198 606)" fill="black">
+          <tspan font-family="Avenir" font-size="13" fill="black" x="24.415733" y="13">Estadísticas</tspan>
+        </text>
+      </g>
+      <g id="Line_1350">
+        <path d="M 1894.3465 494 L 1894.3465 544 L 1664.3465 544 L 1664.3465 584.1" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="square" stroke-linejoin="bevel" stroke-width="1"/>
+      </g>
+      <g id="Line_1351">
+        <line x1="1894.3465" y1="494" x2="1894.3465" y2="584.1" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="square" stroke-linejoin="bevel" stroke-width="1"/>
+      </g>
+      <g id="Graphic_1352">
+        <rect x="679.5198" y="594" width="129.65346" height="42" fill="#ff4040"/>
+        <rect x="679.5198" y="594" width="129.65346" height="42" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(685.5198 606)" fill="black">
+          <tspan font-family="Avenir" font-size="13" fill="black" x="26.079733" y="13">Pendientes</tspan>
+        </text>
+      </g>
+      <g id="Line_1353">
+        <path d="M 514.34654 494 L 514.34654 504 L 514.2599 544 L 744.3465 544 L 744.3465 584.1" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="square" stroke-linejoin="bevel" stroke-width="1"/>
+      </g>
+      <g id="Graphic_1354">
+        <rect x="2059.5198" y="594" width="129.65346" height="42" fill="#ff4040"/>
+        <rect x="2059.5198" y="594" width="129.65346" height="42" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(2065.5198 606)" fill="black">
+          <tspan font-family="Avenir" font-size="13" fill="black" x="31.734733" y="13">Gerentes</tspan>
+        </text>
+      </g>
+      <g id="Line_1355">
+        <path d="M 1894.3465 494 L 1894.3465 544 L 2124.3465 544 L 2124.3465 584.1" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="square" stroke-linejoin="bevel" stroke-width="1"/>
+      </g>
+    </g>
+  </g>
+</svg>
