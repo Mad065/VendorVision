@@ -1,7 +1,7 @@
 # ZENIK
 ![](docs/img/Logos ZENIK/Logo ZENIK.png)
 
-##Organigrama
+## Organigrama
 
 ### Organigrama general
 ![](docs/img/Organigrama ZENIK/Zenik.png)
