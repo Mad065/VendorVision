@@ -2,6 +2,10 @@ html {
     transition: background-color 0.5s, color 0.5s;
 }
 
+body {
+    height: 100%;
+  }
+
 .dropdown-toggle:not(:focus) {
     outline: 0;
 }
@@ -46,3 +50,24 @@ html {
 .bd-mode-toggle .dropdown-menu .active .bi {
     display: block !important;
 }
+
+.form-signin {
+    max-width: 330px;
+    padding: 1rem;
+  }
+  
+  .form-signin .form-floating:focus-within {
+    z-index: 2;
+  }
+  
+  .form-signin input[type="email"] {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+  
+  .form-signin input[type="password"] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
