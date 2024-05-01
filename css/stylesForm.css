@@ -1,0 +1,19 @@
+.card-form {
+    border-radius: 24px;
+    margin: 20px auto;
+    padding: 24px;
+}
+
+.container {
+    height: 100vh;
+}
+
+.form-group {
+    margin: 16px 4px;
+    padding: 8px;
+}
+
+.form-img {
+    margin: auto;
+    padding: 20px;
+}
