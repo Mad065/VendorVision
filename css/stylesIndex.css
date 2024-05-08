@@ -85,6 +85,8 @@ padding: 1vw 1vw 0 1vw;
     font-size: 2.5vw;
 }
 
+/*Cards*/
+
 .container--card {
     margin: 5vw 0;
 }
@@ -170,9 +172,11 @@ padding: 1vw 1vw 0 1vw;
 }
 
 .card-list {
-    color: #0D98FD;
+    color: #777;
     font-weight: 500;
 }
+
+/*Footer*/
 
 .footer {   
     background-color: #111;
@@ -193,4 +197,30 @@ padding: 1vw 1vw 0 1vw;
 
 .footer-icon {
     margin: 12px;
+}
+
+/*Coulumnas*/
+
+.h1 {
+    padding: 10px 10px 10px 0;
+    margin: 20px 20px 20px 0;
+}
+
+.columna {
+    padding: 24px 32px;
+}
+
+.columna-divider {
+    border: 1px solid #eee;
+    
+}
+
+.columna-btn {
+    margin: 12px;
+    padding: 5px;
+}
+
+.columna-li {
+    margin: 12px;
+    text-align: justify;
 }

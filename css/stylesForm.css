@@ -17,3 +17,7 @@
     margin: auto;
     padding: 20px;
 }
+
+.form-control, .form-select {
+    background-color: #181B1E;
+}
