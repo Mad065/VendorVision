@@ -14,3 +14,24 @@
 .list-link {
     font-weight: 700;
 }
+
+.logo {
+    width: 200px;
+    height: 200px;
+    object-fit: contain;
+}
+
+.div-img {
+    margin: 24px;
+    padding: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container-center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh;
+}
