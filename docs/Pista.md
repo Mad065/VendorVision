@@ -1,6 +1,6 @@
-#Pista
+# Pista
 
-##Medidas
+## Medidas
 
 - Pendulo 20cm, 30°
 - Plano A-B 10 cm
