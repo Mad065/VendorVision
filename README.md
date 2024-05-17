@@ -24,7 +24,6 @@
 
 ![](docs/img/Organigrama ZENIK/Logistica.png)
 
-
 ## Proyectos
 
 1. [VendorVision](docs/VendorVision.md)
