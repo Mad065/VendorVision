@@ -179,10 +179,7 @@ padding: 1vw 1vw 0 1vw;
 /*Footer*/
 
 .footer {   
-    background-color: #111;
-    color: #fff;
-    margin: 0;
-
+    padding-bottom: 48px;
 }
 
 .footer-link {
