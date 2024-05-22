@@ -4,9 +4,11 @@ const router = express.Router();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const conexion = require("./db");
+const app = express();
 
 // Registro de nuevos usuarios
-router.post("/singup", async (req, res) => {
+app.use(express.json());
+router.post("/signup", async (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
@@ -72,27 +74,6 @@ router.post("/login", (req, res) => {
     );
 
     res.status(200).json({ message: "Inicio de sesión exitoso", token });
-  });
-});
-
-// Ruta protegida (ejemplo)
-router.get("/protected", (req, res) => {
-  // Extraer el token del encabezado de la solicitud
-  const token = req.headers["authorization"];
-
-  // Verificar si el token no está presente
-  if (!token) {
-    return res.status(403).json({ message: "Token no proporcionado" });
-  }
-
-  // Verificar el token
-  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-    if (err) {
-      return res.status(401).json({ message: "Token no válido" });
-    }
-
-    // Si el token es válido, conceder acceso al recurso protegido
-    res.status(200).json({ message: "Acceso autorizado", user: decoded });
   });
 });
 
