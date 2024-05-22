@@ -1,99 +1,99 @@
 // APIs
 const express = require("express");
 const router = express.Router();
+const util = require("util");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const conexion = require("./db");
+const { validate } = require("email-validator");
+
+require("dotenv").config();
 
 // Registro de nuevos usuarios
-router.post("/singup", async (req, res) => {
-  const { email, password } = req.body;
+// Promisify the query method of your database connection
+const query = util.promisify(conexion.query).bind(conexion);
 
-  if (!email || !password) {
-    return res
-      .status(400)
-      .json({ message: "Se necesita el email y contraseña" });
+router.post("/signup", async (req, res) => {
+  const { nombre_Usuario, correoE, contraseña } = req.body;
+
+  if (!nombre_Usuario || !correoE || !contraseña) {
+    return res.status(400).json({
+      message:
+        "Se necesita el nombre de usuario, correo electrónico y contraseña",
+    });
+  }
+
+  // Validate email format
+  if (!validate(correoE)) {
+    return res.status(400).json({
+      message: "Correo electrónico inválido",
+    });
+  }
+
+  // Verificar la seguridad de la contraseña (mínimo 8 caracteres)
+  if (contraseña.length < 8) {
+    return res.status(400).json({
+      message: "La contraseña debe tener al menos 8 caracteres",
+    });
   }
 
   try {
-    const hashedPassword = await bcrypt.hash(password, 10);
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(contraseña, 10);
 
-    const query = "INSERT INTO usuarios (email, password) VALUES (?, ?)";
-    conexion.query(query, [email, hashedPassword], (err, result) => {
-      if (err) {
-        console.error("Error registrando usuario:", err.message);
-        return res.status(500).json({ message: "Error en el servidor" });
-      }
-      res.status(201).json({ message: "Usuario registrado exitosamente" });
-    });
+    // Insert user into database
+    const insertQuery =
+      "INSERT INTO Usuario (nombre_Usuario, correoE, contraseña) VALUES (?, ?, ?)";
+    await query(insertQuery, [nombre_Usuario, correoE, hashedPassword]);
+
+    res.status(201).json({ message: "Usuario registrado exitosamente" });
   } catch (error) {
+    console.error("Error en el servidor:", error.message);
     res.status(500).json({ message: "Error en el servidor" });
   }
 });
 
-// Inicio de sesión
-router.post("/login", (req, res) => {
-  const { email, password } = req.body;
+// Endpoint de login
+router.post("/login", async (req, res) => {
+  const { correoE, contraseña } = req.body;
 
-  if (!email || !password) {
+  if (!correoE || !contraseña) {
     return res
       .status(400)
-      .json({ message: "Nombre de usuario y contraseña son requeridos" });
+      .json({ message: "Se necesita el correo electrónico y contraseña" });
   }
 
-  const query = "SELECT * FROM usuarios WHERE email = ?";
-  conexion.query(query, [email], async (err, results) => {
-    if (err) {
-      console.error("Error al buscar usuario:", err.message);
-      return res.status(500).json({ message: "Error en el servidor" });
-    }
-
-    if (results.length === 0) {
-      return res
-        .status(401)
-        .json({ message: "Nombre de usuario o contraseña incorrectos" });
-    }
-
-    const user = results[0];
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-
-    if (!isPasswordValid) {
-      return res
-        .status(401)
-        .json({ message: "Nombre de usuario o contraseña incorrectos" });
-    }
-
-    const token = jwt.sign(
-      { id: user.id, email: user.email },
-      process.env.JWT_SECRET,
-      {
-        expiresIn: "1h",
+  try {
+    const query = "SELECT * FROM Usuario WHERE correoE = ?";
+    conexion.query(query, [correoE], async (err, results) => {
+      if (err) {
+        console.error("Error al buscar el usuario:", err.message);
+        return res.status(500).json({ message: "Error en el servidor" });
       }
-    );
 
-    res.status(200).json({ message: "Inicio de sesión exitoso", token });
-  });
-});
+      if (results.length === 0) {
+        return res.status(401).json({ message: "Usuario no encontrado" });
+      }
 
-// Ruta protegida (ejemplo)
-router.get("/protected", (req, res) => {
-  // Extraer el token del encabezado de la solicitud
-  const token = req.headers["authorization"];
+      const user = results[0];
 
-  // Verificar si el token no está presente
-  if (!token) {
-    return res.status(403).json({ message: "Token no proporcionado" });
+      const isMatch = await bcrypt.compare(contraseña, user.contraseña);
+      if (!isMatch) {
+        return res.status(401).json({ message: "Contraseña incorrecta" });
+      }
+
+      // Generar un token JWT
+      const token = jwt.sign(
+        { id: user.id_Usuario, correoE: user.correoE },
+        process.env.JWT_SECRET,
+        { expiresIn: "1h" }
+      );
+
+      res.status(200).json({ message: "Login exitoso", token });
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Error en el servidor" });
   }
-
-  // Verificar el token
-  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-    if (err) {
-      return res.status(401).json({ message: "Token no válido" });
-    }
-
-    // Si el token es válido, conceder acceso al recurso protegido
-    res.status(200).json({ message: "Acceso autorizado", user: decoded });
-  });
 });
 
 module.exports = router;

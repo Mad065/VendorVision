@@ -1,5 +1,5 @@
 {
-  "name": "vendorvision",
+  "name": "nodejsapi",
   "version": "1.0.0",
   "description": "![](docs/img/Logos ZENIK/Logo ZENIK.png)",
   "main": "index.js",
@@ -16,6 +16,7 @@
     "@popperjs/core": "^2.11.8",
     "bcrypt": "^5.1.1",
     "dotenv": "^16.4.5",
+    "email-validator": "^2.0.4",
     "express": "^4.19.2",
     "jquery": "^3.7.1",
     "jsonwebtoken": "^9.0.2",
