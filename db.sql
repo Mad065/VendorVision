@@ -7,7 +7,7 @@ USE VendorVision;
 # Catalogo de tipos de teléfono
 CREATE TABLE Cat_Tipo_Tel (
     id_Tipo_Tel INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    tipo_tel INT
+    tipo_tel VARCHAR(20)
 );
 
 # Gerentes
