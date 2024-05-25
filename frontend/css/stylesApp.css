@@ -1,3 +1,5 @@
+/*sidebar*/
+
 .sidebar {
     z-index: 100;
     padding: 48px 24px;
@@ -29,9 +31,21 @@
     align-items: center;
 }
 
+/*contenido*/
+
 .container-center {
     display: flex;
     flex-direction: column;
     justify-content: center;
     height: 100vh;
+}
+
+/*gerentes*/
+
+.card-person {
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+    margin: 12px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }

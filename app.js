@@ -4,6 +4,23 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const conexion = require("./db");
 
+// Middleware para verificar el token
+const verifyToken = (req, res, next) => {
+  const token = req.headers["authorization"];
+
+  if (!token) {
+    return res.status(403).json({ message: "No se proporcionó un token" });
+  }
+
+  try {
+    const decoded = jwt.verify(token.split(" ")[1], process.env.JWT_SECRET); // Verificar y decodificar el token
+    req.user = decoded; // Guardar la información decodificada en el request
+    next(); // Pasar al siguiente middleware o ruta
+  } catch (error) {
+    return res.status(401).json({ message: "Token inválido o expirado" });
+  }
+};
+
 // Registro de nuevos usuarios
 router.post("/signup", async (req, res) => {
   const { nombre_Usuario, correoE, contraseña } = req.body;
@@ -85,22 +102,24 @@ router.post("/login", async (req, res) => {
   }
 });
 
-// Middleware para verificar el token
-const verifyToken = (req, res, next) => {
-  const token = req.headers["authorization"];
-
-  if (!token) {
-    return res.status(403).json({ message: "No se proporcionó un token" });
-  }
-
+// Obtener gerentes
+router.get("/proveedoresgerentes", verifyToken, (req, res) => {
   try {
-    const decoded = jwt.verify(token.split(" ")[1], process.env.JWT_SECRET); // Verificar y decodificar el token
-    req.user = decoded; // Guardar la información decodificada en el request
-    next(); // Pasar al siguiente middleware o ruta
+    // Ejecutar el procedimiento almacenado para obtener los datos de los gerentes
+    conexion.query("CALL ObtenerDatosGerentes()", (err, results) => {
+      if (err) {
+        console.error("Error al obtener datos de los gerentes:", err.message);
+        return res.status(500).json({ message: "Error en el servidor" });
+      }
+
+      // Enviar los resultados como respuesta
+      res.status(200).json({ gerentes: results[0] });
+    });
   } catch (error) {
-    return res.status(401).json({ message: "Token inválido o expirado" });
+    console.error("Error en el servidor:", error.message);
+    res.status(500).json({ message: "Error en el servidor" });
   }
-};
+});
 
 // Ejemplo de ruta protegida
 router.get("/protected", verifyToken, (req, res) => {

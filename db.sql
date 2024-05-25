@@ -180,3 +180,4 @@ CREATE TABLE Rel_Usuario_Gerente (
     FOREIGN KEY (id_Usuario) REFERENCES Usuario(id_Usuario),
     FOREIGN KEY (id_Gerente) REFERENCES Gerente(id_Gerente)
 );
+
