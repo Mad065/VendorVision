@@ -91,7 +91,7 @@ router.post("/login", async (req, res) => {
       const token = jwt.sign(
         { id: user.id, correoE: user.correoE },
         process.env.JWT_SECRET,
-        { expiresIn: "1h" }
+        { expiresIn: "1y" }
       );
 
       res.status(200).json({ message: "Login exitoso", token });
@@ -114,6 +114,26 @@ router.get("/proveedoresgerentes", verifyToken, (req, res) => {
 
       // Enviar los resultados como respuesta
       res.status(200).json({ gerentes: results[0] });
+    });
+  } catch (error) {
+    console.error("Error en el servidor:", error.message);
+    res.status(500).json({ message: "Error en el servidor" });
+  }
+});
+
+// Obtener pedidos
+router.get("/pedidos", verifyToken, (req, res) => {
+  try {
+    const query = "CALL ObtenerDatosPedidos();";
+    conexion.query(query, (err, results) => {
+      if (err) {
+        console.error(
+          "Error al obtener los datos de los pedidos:",
+          err.message
+        );
+        return res.status(500).json({ message: "Error en el servidor" });
+      }
+      res.status(200).json({ pedidos: results[0] });
     });
   } catch (error) {
     console.error("Error en el servidor:", error.message);
