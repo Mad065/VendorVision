@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>loginVendorVision</title>
+    <script src="/js/color-modes.js"></script>
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="icon" href="img/Logo ZENIK Simple.svg" type="image/png" />
+    <link href="/css/stylesVentas.css" rel="stylesheet" />
+    <link href="/css/stylesIndex.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet" />
+  </head>
+  <body>
+    <nav class="navbar bg-body-tertiary">
+      <div class="container-fluid">
+        <a class="navbar-brand d-none d-lg-block" href="#">
+          <img
+            src="img/Logo ZENIK Simple.svg"
+            alt="Logo"
+            width="30"
+            height="24" />Venta de productos
+        </a>
+      </div>
+    </nav>
+    <!--Modulo de ventas-->
+    <div class="container mt-5">
+      <div class="row">
+        <div class="col-md-8">
+          <div
+            class="card card--black text-white shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+            <div class="card-product">
+              <h3 class="card-black-title">Productos</h3>
+              <hr class="featurette-divider" />
+              <div class="d-flex justify-content-between">
+                <div>
+                  <h6 class="card-black-title mb-2">Nombre producto 1</h6>
+                  <p class="description-producs">
+                    Descripción: Producto a la venta muy rico
+                  </p>
+                </div>
+                <div>
+                  <p class="card-black-text">Precio: $500.00</p>
+                </div>
+              </div>
+              <div
+                class="d-flex justify-content-between align-items-center mt-3">
+                <div class="input-group">
+                  <select class="form-select" aria-label="Cantidad">
+                    <option selected>Cantidad</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                  </select>
+                  <button class="btn btn-primary ms-2">Eliminar</button>
+                </div>
+              </div>
+              <hr class="featurette-divider" />
+              <div class="d-flex justify-content-end">
+                <p class="card-black-text">Subtotal (1 producto): $500.00</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div
+            class="card card--black text-white shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+            <div class="card-body">
+              <p class="card-black-text">Fecha del compra: hoy</p>
+              <p class="card-black-text">Cantidad de productos: 1</p>
+              <p class="card-black-text">Precio total de venta: $500</p>
+              <button class="btn btn-success w-100 mb-2">
+                Proceder al pago
+              </button>
+              <button class="btn btn-danger w-100">Cancelar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="js/login.js"></script>
+  </body>
+</html>

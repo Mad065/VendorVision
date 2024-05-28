@@ -7,24 +7,24 @@ USE VendorVision;
 # Catalogo de tipos de teléfono
 CREATE TABLE Cat_Tipo_Tel (
     id_Tipo_Tel INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    tipo_tel VARCHAR(20)
+    tipo_Tel VARCHAR(50)
 );
 
 # Gerentes
 CREATE TABLE Gerente (
     id_Gerente INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     nombre_Gerente VARCHAR(50),
-    apellidos VARCHAR(50),
-    curp VARCHAR(18),
-    edad INT(3),
-    fechaNac DATE,
-    id_Tipo_Tel INT
+    apellido_Gerente VARCHAR(50),
+    CURP VARCHAR(18),
+    edad INT,
+    fechaNac DATE
 );
 
 # Tiendas
 CREATE TABLE Tienda (
     id_Tienda INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    nombre_Tienda VARCHAR(50)
+    nombre_Tienda VARCHAR(50),
+    tel_Tienda VARCHAR(50)
 );
 
 # Relacion entre Gerentes y Tiendas
@@ -41,15 +41,28 @@ CREATE TABLE Proveedor (
     id_Proveedor INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     nombre_Proveedor VARCHAR(50),
     apellidos_Proveedor VARCHAR(50),
-    nombre_Empresa VARCHAR(50),
-    id_Tipo_Tel INT,
-    FOREIGN KEY (id_Tipo_Tel) REFERENCES Cat_Tipo_Tel(id_Tipo_Tel)
+    nombre_Empresa VARCHAR(50)
 );
 
 # Catalogo de Tipos de Producto
 CREATE TABLE Cat_Tipo_Producto (
     id_Tipo_Producto INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     tipo_Producto VARCHAR(50)
+);
+
+# Pedidos
+CREATE TABLE Pedido (
+    id_Pedido INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    numPedidos INT
+);
+
+# Relacion entre Proveedores y Pedidos
+CREATE TABLE Rel_Proveedor_Pedido (
+    id_Rel_Proveedor_Pedido INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    id_Proveedor INT,
+    id_Pedido INT,
+    FOREIGN KEY (id_Proveedor) REFERENCES Proveedor(id_Proveedor),
+    FOREIGN KEY (id_Pedido) REFERENCES Pedido(id_Pedido)
 );
 
 # Productos
@@ -62,23 +75,6 @@ CREATE TABLE Producto (
     id_Tipo_Producto INT,
     cantidad INT,
     FOREIGN KEY (id_Tipo_Producto) REFERENCES Cat_Tipo_Producto(id_Tipo_Producto)
-);
-
-# Pedidos
-CREATE TABLE Pedido (
-    id_Pedido INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    id_Producto INT,
-    num_Pedidos INT,
-    FOREIGN KEY (id_Producto) REFERENCES Producto(id_Producto)
-);
-
-# Relacion entre Proveedores y Pedidos
-CREATE TABLE Rel_Proveedor_Pedido (
-    id_Rel_Proveedore_Pedido INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    id_Proveedor INT,
-    id_Pedido INT,
-    FOREIGN KEY (id_Proveedor) REFERENCES Proveedor(id_Proveedor),
-    FOREIGN KEY (id_Pedido) REFERENCES Pedido(id_Pedido)
 );
 
 # Suministro
@@ -95,8 +91,8 @@ CREATE TABLE Dinero_Producto (
     id_Dinero_Producto INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     ganancia INT,
     inversion INT,
-    cantidadVendida INT,
-    cantidadComprad INT
+    cantidad_Vendida INT,
+    cantidad_Comprada INT
 );
 
 # Relacion entre Productos-Dinero
@@ -105,7 +101,7 @@ CREATE TABLE Rel_Producto_Dinero (
     id_Producto INT,
     id_Dinero_Producto INT,
     FOREIGN KEY (id_Producto) REFERENCES Producto(id_Producto),
-    FOREIGN KEY (id_Dinero_Producto) REFERENCES Dinero_Producto (id_Dinero_Producto)
+    FOREIGN KEY (id_Dinero_Producto) REFERENCES Dinero_Producto(id_Dinero_Producto)
 );
 
 # Gerentes administrando Productos
@@ -131,10 +127,10 @@ CREATE TABLE Direccion (
     id_Dir INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     colonia VARCHAR(50),
     calle VARCHAR(50),
-    CP INT(10),
+    CP INT,
     ciudad VARCHAR(50),
-    num_Int INT(10),
-    num_Ext INT(10)
+    num_Int INT,
+    num_Ext INT
 );
 
 # Relacion entre Gerentes y Direcciones
@@ -181,3 +177,30 @@ CREATE TABLE Rel_Usuario_Gerente (
     FOREIGN KEY (id_Gerente) REFERENCES Gerente(id_Gerente)
 );
 
+# Teléfonos
+CREATE TABLE Telefono (
+    id_Tel INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    telefono VARCHAR(20)
+);
+
+# Relacion entre Gerentes y Teléfonos
+CREATE TABLE Rel_Gerente_Tel (
+    id_Rel_Gerente_Tel INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    id_Gerente INT,
+    id_Tel INT,
+    id_Tipo_Tel INT,
+    FOREIGN KEY (id_Gerente) REFERENCES Gerente(id_Gerente),
+    FOREIGN KEY (id_Tel) REFERENCES Telefono(id_Tel),
+    FOREIGN KEY (id_Tipo_Tel) REFERENCES Cat_Tipo_Tel(id_Tipo_Tel)
+);
+
+# Relacion entre Proveedores y Teléfonos
+CREATE TABLE Rel_Proveedor_Tel (
+    id_Rel_Proveedor_Tel INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    id_Proveedor INT,
+    id_Tel INT,
+    id_Tipo_Tel INT,
+    FOREIGN KEY (id_Proveedor) REFERENCES Proveedor(id_Proveedor),
+    FOREIGN KEY (id_Tel) REFERENCES Telefono(id_Tel),
+    FOREIGN KEY (id_Tipo_Tel) REFERENCES Cat_Tipo_Tel(id_Tipo_Tel)
+);

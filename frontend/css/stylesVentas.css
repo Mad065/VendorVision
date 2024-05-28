@@ -1,0 +1,11 @@
+/*Ventas*/
+
+.card-product {
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+    margin: 12px;
+}
+.description-producs {
+    margin: 20px ;
+}
