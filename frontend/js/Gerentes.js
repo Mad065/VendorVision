@@ -32,7 +32,6 @@ document.addEventListener("DOMContentLoaded", () => {
       // Iterar sobre los datos de los gerentes y crear una card para cada uno
       data.gerentes.forEach((gerente) => {
         const card = `
-          <div class="row">
             <div class="col-sm-6 card card-person mb-3" style="max-width: 540px">
               <div class="row g-0">
                 <div class="col-md-4">
@@ -56,7 +55,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 </div>
               </div>
             </div>
-          </div>
         `;
         gerentesContainer.insertAdjacentHTML("beforeend", card);
       });
