@@ -1,10 +1,19 @@
 document.addEventListener("DOMContentLoaded", () => {
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    alert("Por favor, inicia sesión primero.");
+    // Redirige al usuario a la página de inicio de sesión
+    window.location.href = "/login.html";
+    return;
+  }
+
   // Realizar una solicitud GET a la API para obtener los datos de los gerentes
   fetch("/api/proveedoresgerentes", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      // Aquí podrías agregar el token JWT si lo necesitas
+      Authorization: `Bearer ${token}`,
     },
   })
     .then((response) => {
@@ -14,6 +23,11 @@ document.addEventListener("DOMContentLoaded", () => {
       return response.json();
     })
     .then((data) => {
+      if (data.gerentes.length === 0) {
+        // Redirigir a otra página si no hay registros de gerentes
+        alert("No hay ningun gerente registrado");
+        return;
+      }
       const gerentesContainer = document.getElementById("gerentes-container");
       // Iterar sobre los datos de los gerentes y crear una card para cada uno
       data.gerentes.forEach((gerente) => {
@@ -49,5 +63,8 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     .catch((error) => {
       console.error("Error:", error.message);
+      alert("Por favor, inicia sesión primero.");
+      // Redirige al usuario a la página de inicio de sesión
+      window.location.href = "/login.html";
     });
 });

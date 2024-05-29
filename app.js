@@ -114,6 +114,7 @@ router.get("/proveedoresgerentes", verifyToken, (req, res) => {
 
       // Enviar los resultados como respuesta
       res.status(200).json({ gerentes: results[0] });
+      console.log("Gerentes obtenidos correctamente");
     });
   } catch (error) {
     console.error("Error en el servidor:", error.message);

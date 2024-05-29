@@ -23,8 +23,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (response.ok) {
         const result = await response.json();
-        alert("Inicio de sesion realizado exitosamente");
-        // Redirige al usuario a la página de inicio de sesión
+
+        // Guardar el token en localStorage
+        if (result.token) {
+          localStorage.setItem("token", result.token);
+          console.log("Token guardado en localStorage");
+        }
+
+        alert("Inicio de sesión realizado exitosamente");
+        // Redirige al usuario a la página de proveedores
         window.location.href = "/proveedores/proveedores.html";
       } else {
         const errorData = await response.json();
