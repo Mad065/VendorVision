@@ -1,38 +1,20 @@
 -- Active: 1715711027341@@127.0.0.1@3306@VendorVision
 
-
 DELIMITER $$
 
--- Procedimiento para eliminar un Gerente
-CREATE PROCEDURE Eliminar_Gerente(
-    IN id_Gerente INT
-)
-BEGIN
-    DELETE FROM Gerente WHERE id_Gerente = id_Gerente;
-END$$
+-- Procedimiento para eliminar un usuario y todas sus referencias en la base de datos
+CREATE PROCEDURE Eliminar_Usuario(
+    IN e_id_Usuario INT
 
--- Procedimiento para eliminar una Tienda
-CREATE PROCEDURE Eliminar_Tienda(
-    IN id_Tienda INT
-)
 BEGIN
-    DELETE FROM Tienda WHERE id_Tienda = id_Tienda;
-END$$
+    -- Eliminar relaciones entre Usuarios y Proveedores
+    DELETE FROM Rel_Usuario_Proveedor WHERE id_Usuario = e_id_Usuario;
 
--- Procedimiento para eliminar un Proveedor
-CREATE PROCEDURE Eliminar_Proveedor(
-    IN id_Proveedor INT
-)
-BEGIN
-    DELETE FROM Proveedor WHERE id_Proveedor = id_Proveedor;
-END$$
+    -- Eliminar relaciones entre Usuarios y Gerentes
+    DELETE FROM Rel_Usuario_Gerente WHERE id_Usuario = e_id_Usuario;
 
--- Procedimiento para eliminar un Producto
-CREATE PROCEDURE Eliminar_Producto(
-    IN id_Producto INT
-)
-BEGIN
-    DELETE FROM Producto WHERE id_Producto = id_Producto;
+    -- Finalmente, eliminar el usuario de la tabla Usuario
+    DELETE FROM Usuario WHERE id_Usuario = e_id_Usuario;
 END$$
 
 DELIMITER ;

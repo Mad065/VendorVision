@@ -50,21 +50,6 @@ CREATE TABLE Cat_Tipo_Producto (
     tipo_Producto VARCHAR(50)
 );
 
-# Pedidos
-CREATE TABLE Pedido (
-    id_Pedido INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    numPedidos INT
-);
-
-# Relacion entre Proveedores y Pedidos
-CREATE TABLE Rel_Proveedor_Pedido (
-    id_Rel_Proveedor_Pedido INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    id_Proveedor INT,
-    id_Pedido INT,
-    FOREIGN KEY (id_Proveedor) REFERENCES Proveedor(id_Proveedor),
-    FOREIGN KEY (id_Pedido) REFERENCES Pedido(id_Pedido)
-);
-
 # Productos
 CREATE TABLE Producto (
     id_Producto INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
@@ -131,6 +116,32 @@ CREATE TABLE Direccion (
     ciudad VARCHAR(50),
     num_Int INT,
     num_Ext INT
+);
+
+# Pedidos
+CREATE TABLE Pedido (
+    id_Pedido INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    id_Producto INT,
+    numPedidos INT,
+    FOREIGN KEY (id_Producto) REFERENCES Producto(id_Producto)
+);
+
+# Relación entre Pedidos y Gerentes
+CREATE TABLE Rel_Pedido_Gerente (
+    id_Rel_Pedido_Gerente INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    id_Pedido INT,
+    id_Gerente INT,
+    FOREIGN KEY (id_Pedido) REFERENCES Pedido(id_Pedido),
+    FOREIGN KEY (id_Gerente) REFERENCES Gerente(id_Gerente)
+);
+
+# Relacion entre Proveedores y Pedidos
+CREATE TABLE Rel_Proveedor_Pedido (
+    id_Rel_Proveedor_Pedido INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    id_Proveedor INT,
+    id_Pedido INT,
+    FOREIGN KEY (id_Proveedor) REFERENCES Proveedor(id_Proveedor),
+    FOREIGN KEY (id_Pedido) REFERENCES Pedido(id_Pedido)
 );
 
 # Relacion entre Gerentes y Direcciones

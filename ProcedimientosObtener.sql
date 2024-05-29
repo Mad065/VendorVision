@@ -8,7 +8,7 @@ BEGIN
     SELECT 
         Usuario.nombre_Usuario,
         Gerente.nombre_Gerente,
-        Gerente.apellidos,
+        Gerente.apellido_Gerente,
         Tienda.nombre_Tienda,
         CONCAT(Direccion.calle, ' ', Direccion.num_Ext, ', ', Direccion.colonia, ', ', Direccion.ciudad, ', ', Direccion.CP) AS direccion,
         Usuario.correoE,
@@ -28,15 +28,16 @@ BEGIN
     LEFT JOIN 
         Direccion ON Rel_Gerente_Dir.id_Dir = Direccion.id_Dir
     LEFT JOIN 
-        Pedido ON Gerente.id_Gerente = Pedido.id_Gerente
+        Rel_Pedido_Gerente ON Gerente.id_Gerente = Rel_Pedido_Gerente.id_Gerente
+    LEFT JOIN
+        Pedido ON Rel_Pedido_Gerente.id_Pedido = Pedido.id_Pedido
     GROUP BY 
-        Usuario.nombre_Usuario, Gerente.nombre_Gerente, Gerente.apellidos, Tienda.nombre_Tienda, direccion, Usuario.correoE;
+        Usuario.nombre_Usuario, Gerente.nombre_Gerente, Gerente.apellido_Gerente, Tienda.nombre_Tienda, direccion, Usuario.correoE;
 END$$
 
 DELIMITER $$
 
 -- Procedimiento para obtener datos de pedidos
-
 CREATE PROCEDURE ObtenerDatosPedidos()
 BEGIN
     SELECT 
@@ -48,9 +49,11 @@ BEGIN
     FROM 
         Gerente
     JOIN 
-        Administra ON Gerente.id_Gerente = Administra.id_Gerente
+        Rel_Pedido_Gerente ON Gerente.id_Gerente = Rel_Pedido_Gerente.id_Gerente
     JOIN 
-        Producto ON Administra.id_Producto = Producto.id_Producto
+        Pedido ON Rel_Pedido_Gerente.id_Pedido = Pedido.id_Pedido
+    JOIN 
+        Producto ON Pedido.id_Producto = Producto.id_Producto
     JOIN 
         Rel_Producto_Dinero ON Producto.id_Producto = Rel_Producto_Dinero.id_Producto
     JOIN 
@@ -58,3 +61,4 @@ BEGIN
 END$$
 
 DELIMITER ;
+
