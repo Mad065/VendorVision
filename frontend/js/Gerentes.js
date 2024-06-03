@@ -24,7 +24,6 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     .then((data) => {
       if (data.gerentes.length === 0) {
-        // Redirigir a otra página si no hay registros de gerentes
         alert("No hay ningun gerente registrado");
         return;
       }

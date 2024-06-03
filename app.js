@@ -58,6 +58,194 @@ router.post("/signup", async (req, res) => {
   }
 });
 
+router.post("/gerentessignup", async (req, res) => {
+  const {
+    correoE,
+    nombre_Gerente,
+    apellido_Gerente,
+    CURP,
+    birthdate,
+    edad,
+    nombre_Tienda,
+    tel_Tienda,
+    colonia,
+    calle,
+    cp,
+    ciudad,
+    num_int,
+    num_ext,
+  } = req.body;
+
+  if (
+    !correoE ||
+    !nombre_Gerente ||
+    !apellido_Gerente ||
+    !CURP ||
+    !birthdate ||
+    !edad ||
+    !nombre_Tienda ||
+    !tel_Tienda ||
+    !colonia ||
+    !calle ||
+    !cp ||
+    !ciudad ||
+    !num_ext
+  ) {
+    return res.status(400).json({
+      message: "Se necesitan los datos",
+    });
+  }
+
+  try {
+    const insertQuery =
+      "CALL Insertar_Gerente(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    conexion.query(
+      insertQuery,
+      [
+        nombre_Gerente,
+        apellido_Gerente,
+        CURP,
+        edad,
+        birthdate,
+        nombre_Tienda,
+        tel_Tienda,
+        colonia,
+        calle,
+        cp,
+        ciudad,
+        num_int,
+        num_ext,
+        correoE,
+      ],
+      (err, result) => {
+        if (err) {
+          console.error("Error registrando gerente:", err.message);
+          return res.status(500).json({ message: "Error en el servidor" });
+        }
+        res.status(201).json({ message: "Gerente registrado exitosamente" });
+      }
+    );
+  } catch (error) {
+    console.error("Error en el servidor:", error.message);
+    res.status(500).json({ message: "Error en el servidor" });
+  }
+});
+
+router.post("/proveedoressignup", async (req, res) => {
+  const {
+    correoE,
+    nombre_Proveedor,
+    apellido_Proveedor,
+    birthdate,
+    nombre_Empresa,
+    colonia,
+    calle,
+    cp,
+    ciudad,
+    num_int,
+    num_ext,
+  } = req.body;
+
+  if (
+    !correoE ||
+    !nombre_Proveedor ||
+    !apellido_Proveedor ||
+    !birthdate ||
+    !nombre_Empresa ||
+    !colonia ||
+    !calle ||
+    !cp ||
+    !ciudad ||
+    !num_ext
+  ) {
+    return res.status(400).json({
+      message: "Se necesitan los datos",
+    });
+  }
+
+  try {
+    const insertQuery =
+      "CALL Insertar_Gerente(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    conexion.query(
+      insertQuery,
+      [
+        nombre_Proveedor,
+        apellido_Proveedor,
+        birthdate,
+        nombre_Empresa,
+        colonia,
+        calle,
+        cp,
+        ciudad,
+        num_int,
+        num_ext,
+        correoE,
+      ],
+      (err, result) => {
+        if (err) {
+          console.error("Error registrando gerente:", err.message);
+          return res.status(500).json({ message: "Error en el servidor" });
+        }
+        res.status(201).json({ message: "Gerente registrado exitosamente" });
+      }
+    );
+  } catch (error) {
+    console.error("Error en el servidor:", error.message);
+    res.status(500).json({ message: "Error en el servidor" });
+  }
+});
+
+// Verificar si el correo ya está registrado
+router.post("/correo-disponible", (req, res) => {
+  const { correoE } = req.body;
+
+  try {
+    const selectQuery = "SELECT * FROM Usuario WHERE correoE = ?";
+    conexion.query(selectQuery, [correoE], async (err, results) => {
+      if (err) {
+        console.error("Error al buscar el usuario:", err.message);
+        return res.status(500).json({ message: "Error en el servidor" });
+      }
+
+      if (results.length === 0) {
+        return res.status(200).json({ message: "Correo disponible" });
+      } else {
+        res.status(200).json({ message: "Correo no disponible" });
+      }
+    });
+  } catch (error) {
+    console.error("Error en el servidor:", error.message);
+    res.status(500).json({ message: "Error en el servidor" });
+  }
+});
+
+router.post("/curp-disponible", (req, res) => {
+  const { CURP } = req.body;
+
+  if (!CURP) {
+    return res.status(400).json({ message: "CURP es requerido" });
+  }
+
+  try {
+    const selectQuery = "SELECT * FROM Gerente WHERE CURP = ?";
+    conexion.query(selectQuery, [CURP], async (err, results) => {
+      if (err) {
+        console.error("Error al buscar el CURP:", err.message);
+        return res.status(500).json({ message: "Error en el servidor" });
+      }
+
+      if (results.length === 0) {
+        return res.status(200).json({ message: "CURP disponible" });
+      } else {
+        return res.status(200).json({ message: "CURP no disponible" });
+      }
+    });
+  } catch (error) {
+    console.error("Error en el servidor:", error.message);
+    res.status(500).json({ message: "Error en el servidor" });
+  }
+});
+
 // Inicio de sesión
 router.post("/login", async (req, res) => {
   const { correoE, contraseña } = req.body;
@@ -135,6 +323,7 @@ router.get("/pedidos", verifyToken, (req, res) => {
         return res.status(500).json({ message: "Error en el servidor" });
       }
       res.status(200).json({ pedidos: results[0] });
+      console.log("Pedidos obtenidos correctamente");
     });
   } catch (error) {
     console.error("Error en el servidor:", error.message);

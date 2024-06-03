@@ -18,35 +18,34 @@
   </head>
   <body>
     <div
-      class="col-md-6 container d-flex justify-content-center align-items-center">
+      class="col-md-6 container-center container d-flex justify-content-center align-items-center">
       <div class="card card--black card-form">
         <div class="d-flex align-items-center justify-content-center">
           <form>
             <h3>Crear una cuenta</h3>
             <div class="form-group">
-              <label for="email" class="form-label">Correo electrónico</label>
+              <label for="correoE" class="form-label">Correo electrónico</label>
               <input type="email" class="form-control" id="correoE" />
             </div>
+
             <div class="form-group">
-              <label for="username" class="form-label">Nombre de usuario</label>
+              <label for="nombre_Usuario" class="form-label"
+                >Nombre de usuario</label
+              >
               <input type="text" class="form-control" id="nombre_Usuario" />
             </div>
+
             <div class="form-group">
-              <label for="password" class="form-label">Contraseña</label>
+              <label for="contraseña" class="form-label">Contraseña</label>
               <input type="password" class="form-control" id="contraseña" />
             </div>
-            <div class="form-group">
-              <label for="birthdate" class="form-label"
-                >Fecha de nacimiento</label
-              >
-              <input type="date" class="form-control" id="date" />
-            </div>
+
             <div class="form-group">
               <label for="account-type" class="form-label"
                 >Tipo de cuenta</label
               >
               <select class="form-select" id="account-type">
-                <option selected></option>
+                <option value="" selected>Seleccionar</option>
                 <option value="proveedor">Proveedor</option>
                 <option value="gerente">Gerente</option>
               </select>
@@ -58,9 +57,10 @@
                 Al registrarte, aceptas las Condiciones del Servicio y la
                 Política de Privacidad de VendorVision.
               </div>
+
               <div class="form-text">
                 ¿Ya tienes cuenta?
-                <a href="login.html" class="link-primary">Inicia sesion</a>
+                <a href="login.html" class="link-primary">Inicia sesión</a>
               </div>
             </div>
           </form>
