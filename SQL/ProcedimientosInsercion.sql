@@ -110,5 +110,45 @@ BEGIN
     VALUES(id_Usuario, id_Proveedor);
 END$$
 
+CREATE PROCEDURE RegistrarProducto (
+    IN p_clave INT,
+    IN p_nombre_Producto VARCHAR(50),
+    IN p_descripcion VARCHAR(50),
+    IN p_caducidad DATE,
+    IN p_id_Tipo_Producto INT,
+    IN p_cantidad INT,
+    IN p_ganancia INT,
+    IN p_inversion INT,
+    IN p_cantidad_Vendida INT,
+    IN p_cantidad_Comprada INT,
+    IN p_id_Proveedor INT
+)
+BEGIN
+    DECLARE v_id_Producto INT;
+    DECLARE v_id_Dinero_Producto INT;
+    
+    -- Insertar en la tabla Producto
+    INSERT INTO Producto (clave, nombre_Producto, descripcion, caducidad, id_Tipo_Producto, cantidad)
+    VALUES (p_clave, p_nombre_Producto, p_descripcion, p_caducidad, p_id_Tipo_Producto, p_cantidad);
+    
+    -- Obtener el id del producto recién insertado
+    SET v_id_Producto = LAST_INSERT_ID();
+    
+    -- Insertar en la tabla Dinero_Producto
+    INSERT INTO Dinero_Producto (ganancia, inversion, cantidad_Vendida, cantidad_Comprada)
+    VALUES (p_ganancia, p_inversion, p_cantidad_Vendida, p_cantidad_Comprada);
+    
+    -- Obtener el id del dinero_producto recién insertado
+    SET v_id_Dinero_Producto = LAST_INSERT_ID();
+    
+    -- Relacionar el producto con su información financiera
+    INSERT INTO Rel_Producto_Dinero (id_Producto, id_Dinero_Producto)
+    VALUES (v_id_Producto, v_id_Dinero_Producto);
+    
+    -- Insertar en la tabla Suministro
+    INSERT INTO Suministro (id_Proveedor, id_Producto)
+    VALUES (p_id_Proveedor, v_id_Producto);
+    
+END $$
 
 DELIMITER ;

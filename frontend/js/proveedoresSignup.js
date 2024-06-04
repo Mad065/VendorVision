@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
+  console.log("hola sirvo");
   const form = document.querySelector("form");
   const dateInput = document.getElementById("birthdate");
 

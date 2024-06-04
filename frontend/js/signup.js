@@ -114,7 +114,7 @@ document.addEventListener("DOMContentLoaded", () => {
         alert("Usuario registrado exitosamente");
         // Redirige al usuario a la página de inicio de sesión
         if (accountType === "proveedor") {
-          window.location.href = "/proveedorSignup.html";
+          window.location.href = "/proveedoresSignup.html";
         } else if (accountType === "gerente") {
           window.location.href = "/gerentesSignup.html";
         }

@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         alert("Inicio de sesión realizado exitosamente");
         // Redirige al usuario a la página de proveedores
-        window.location.href = "/proveedores/Inicio.html";
+        window.location.href = "/gerentes/Inicio.html";
       } else {
         const errorData = await response.json();
         alert(`Error: ${errorData.message}`);
