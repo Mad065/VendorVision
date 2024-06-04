@@ -63,5 +63,30 @@ BEGIN
         Dinero_Producto ON Rel_Producto_Dinero.id_Dinero_Producto = Dinero_Producto.id_Dinero_Producto;
 END$$
 
+DELIMITER $$
+
+CREATE PROCEDURE ObtenerDatosProductos(IN clave INT)
+BEGIN
+    SELECT 
+        Producto.nombre_Producto,
+        Producto.descripcion
+        Producto.cantidad,
+        Producto.peso,
+        Cat_Tipo_Producto.tipo_Producto,
+        Dinero_Producto.inversion,
+        Dinero_Producto.ganancia
+    FROM 
+        Producto
+    JOIN 
+        Rel_Producto_Dinero ON Producto.id_Producto = Rel_Producto_Dinero.id_Producto
+    JOIN 
+        Dinero_Producto ON Rel_Producto_Dinero.id_Dinero_Producto = Dinero_Producto.id_Dinero_Producto
+    JOIN
+        Cat_Tipo_Producto ON Producto.id_Tipo_Producto = Cat_Tipo_Producto.id_Tipo_Producto
+    WHERE 
+        Producto.clave = clave;
+END$$
+
+
 DELIMITER ;
 

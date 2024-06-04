@@ -290,6 +290,31 @@ router.post("/login", async (req, res) => {
   }
 });
 
+router.get("/productos", verifyToken, (req, res) => {
+  const { clave } = req.query;
+
+  if (!clave) {
+    return res
+      .status(400)
+      .json({ message: "La clave del producto es requerida" });
+  }
+
+  try {
+    const query = "CALL ObtenerDatosProductoPorClave(?);";
+    conexion.query(query, [clave], (err, results) => {
+      if (err) {
+        console.error("Error al obtener el producto:", err.message);
+        return res.status(500).json({ message: "Error en el servidor" });
+      }
+      res.status(200).json({ productos: results[0] });
+      console.log("Producto obtenido correctamente");
+    });
+  } catch (error) {
+    console.error("Error en el servidor:", error.message);
+    res.status(500).json({ message: "Error en el servidor" });
+  }
+});
+
 // Obtener gerentes
 router.get("/proveedoresgerentes", verifyToken, (req, res) => {
   try {
