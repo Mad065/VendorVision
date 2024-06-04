@@ -69,7 +69,7 @@ CREATE PROCEDURE ObtenerDatosProductos(IN clave INT)
 BEGIN
     SELECT 
         Producto.nombre_Producto,
-        Producto.descripcion
+        Producto.descripcion,
         Producto.cantidad,
         Producto.peso,
         Cat_Tipo_Producto.tipo_Producto,

@@ -300,8 +300,8 @@ router.get("/productos", verifyToken, (req, res) => {
   }
 
   try {
-    const query = "CALL ObtenerDatosProductoPorClave(?);";
-    conexion.query(query, [clave], (err, results) => {
+    const query = "CALL ObtenerDatosProductos(?);";
+    conexion.query(query, [parseInt(clave)], (err, results) => {
       if (err) {
         console.error("Error al obtener el producto:", err.message);
         return res.status(500).json({ message: "Error en el servidor" });
@@ -309,6 +309,44 @@ router.get("/productos", verifyToken, (req, res) => {
       res.status(200).json({ productos: results[0] });
       console.log("Producto obtenido correctamente");
     });
+  } catch (error) {
+    console.error("Error en el servidor:", error.message);
+    res.status(500).json({ message: "Error en el servidor" });
+  }
+});
+
+// Ruta para restar el stock del producto vendido
+router.post("/vender-producto", verifyToken, (req, res) => {
+  const { idProducto, cantidadVendida } = req.body;
+
+  if (!idProducto || !cantidadVendida) {
+    return res
+      .status(400)
+      .json({ message: "ID del producto y cantidad vendida son requeridos" });
+  }
+
+  try {
+    const query = `
+      UPDATE Producto 
+      SET cantidad = cantidad - ? 
+      WHERE id_Producto = ? AND cantidad >= ?;
+    `;
+    conexion.query(
+      query,
+      [cantidadVendida, idProducto, cantidadVendida],
+      (err, results) => {
+        if (err) {
+          console.error("Error al actualizar el stock:", err.message);
+          return res.status(500).json({ message: "Error en el servidor" });
+        }
+        if (results.affectedRows === 0) {
+          return res
+            .status(400)
+            .json({ message: "Stock insuficiente o producto no encontrado" });
+        }
+        res.status(200).json({ message: "Stock actualizado correctamente" });
+      }
+    );
   } catch (error) {
     console.error("Error en el servidor:", error.message);
     res.status(500).json({ message: "Error en el servidor" });
