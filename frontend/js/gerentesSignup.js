@@ -1,21 +1,19 @@
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.querySelector("form");
   const dateInput = document.getElementById("birthdate");
-  const curpInput = document.getElementById("curpInput");
+  const curpInput = document.getElementById("CURP");
   let isCURPValid = false;
 
-  dateInput.addEventListener("blur", async () => {
+  dateInput.addEventListener("blur", () => {
     const birthdate = dateInput.value;
-
     const edad = calculateAge(new Date(birthdate));
     if (edad < 18) {
       alert("Debes tener al menos 18 años para registrarte.");
-      return;
     }
   });
 
   curpInput.addEventListener("blur", async () => {
-    const CURP = document.getElementById("curpInput").value;
+    const CURP = curpInput.value;
     if (CURP) {
       try {
         const response = await fetch("/api/curp-disponible", {
@@ -23,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ CURP: CURP }),
+          body: JSON.stringify({ CURP }),
         });
 
         if (response.ok) {
@@ -54,76 +52,29 @@ document.addEventListener("DOMContentLoaded", () => {
     const correoE = localStorage.getItem("correoE");
     const name = document.getElementById("name").value;
     const apellidos = document.getElementById("apellidos").value;
-    const CURP = document.getElementById("CURP").value;
-    const birthdate = document.getElementById("birthdate").value;
+    const CURP = curpInput.value;
+    const birthdate = dateInput.value;
     const nombre_Tienda = document.getElementById("nombre_Tienda").value;
     const tel_Tienda = document.getElementById("tel_Tienda").value;
     const ciudad = document.getElementById("ciudad").value;
     const colonia = document.getElementById("colonia").value;
     const calle = document.getElementById("calle").value;
     const cp = document.getElementById("cp").value;
-    const n_int = document.getElementById("n_int").value;
+    let n_int = document.getElementById("n_int").value;
     const n_ext = document.getElementById("n_ext").value;
 
-    if (n_int == "") {
+    if (n_int === "") {
       n_int = null;
     }
 
     // Validación de campos
-    if (
-      !correoE ||
-      !name ||
-      !apellidos ||
-      !CURP ||
-      !birthdate ||
-      !nombre_Tienda ||
-      !tel_Tienda ||
-      !ciudad ||
-      !colonia ||
-      !calle ||
-      !cp ||
-      !n_ext
-    ) {
-      alert(
-        "Por favor, completa todos los campos antes de enviar el formulario."
-      );
+    if (!correoE || !name || !apellidos || !CURP || !birthdate || !nombre_Tienda || !tel_Tienda || !ciudad || !colonia || !calle || !cp || !n_ext) {
+      alert("Por favor, completa todos los campos antes de enviar el formulario.");
       return;
     }
 
-    CURP = document.getElementById("curpInput").value;
-    if (CURP) {
-      try {
-        const response = await fetch("/api/curp-disponible", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ CURP: CURP }),
-        });
-
-        if (response.ok) {
-          const result = await response.json();
-          if (result.message === "CURP disponible") {
-            alert(result.message);
-            isCURPValid = true;
-          } else {
-            alert(result.message);
-            isCURPValid = false;
-          }
-        } else {
-          const errorData = await response.json();
-          alert(`Error: ${errorData.message}`);
-          isCURPValid = false;
-        }
-      } catch (error) {
-        console.error("Error:", error);
-        alert("Error en el servidor");
-        isCURPValid = false;
-      }
-    }
-
-    if (isCURPValid) {
-      alert("El CURP no es valido o ya esta registrado");
+    if (!isCURPValid) {
+      alert("El CURP no es válido o ya está registrado");
       return;
     }
 
@@ -135,18 +86,18 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const userData = {
-      correoE: correoE,
+      correoE,
       nombre_Gerente: name,
       apellido_Gerente: apellidos,
-      CURP: CURP,
-      birthdate: birthdate,
-      edad: edad + 1,
-      nombre_Tienda: nombre_Tienda,
-      tel_Tienda: tel_Tienda,
-      colonia: colonia,
-      calle: calle,
-      cp: cp,
-      ciudad: ciudad,
+      CURP,
+      birthdate,
+      edad,
+      nombre_Tienda,
+      tel_Tienda,
+      colonia,
+      calle,
+      cp,
+      ciudad,
       num_int: n_int,
       num_ext: n_ext,
     };
@@ -180,10 +131,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let age = today.getFullYear() - birthDate.getFullYear();
     const monthDifference = today.getMonth() - birthDate.getMonth();
 
-    if (
-      monthDifference < 0 ||
-      (monthDifference === 0 && today.getDate() < birthDate.getDate())
-    ) {
+    if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
       age--;
     }
 
