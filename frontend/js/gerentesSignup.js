@@ -86,18 +86,17 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const userData = {
-      correoE,
+      correoE: correoE,
       nombre_Gerente: name,
       apellido_Gerente: apellidos,
-      CURP,
-      birthdate,
-      edad,
-      nombre_Tienda,
-      tel_Tienda,
-      colonia,
-      calle,
-      cp,
-      ciudad,
+      CURP: CURP,
+      fechaNac: birthdate,
+      nombre_Tienda: nombre_Tienda,
+      tel_Tienda: tel_Tienda,
+      colonia: colonia,
+      calle: calle,
+      cp: cp,
+      ciudad: ciudad,
       num_int: n_int,
       num_ext: n_ext,
     };

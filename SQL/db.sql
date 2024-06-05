@@ -72,8 +72,8 @@ CREATE TABLE Suministro (
 # Dinero productos
 CREATE TABLE Dinero_Producto (
     id_Dinero_Producto INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    ganancia INT,
-    inversion INT,
+    ganancia DECIMAL,
+    inversion DECIMAL,
     cantidad_Vendida INT,
     cantidad_Comprada INT
 );

@@ -64,8 +64,7 @@ router.post("/gerentessignup", async (req, res) => {
     nombre_Gerente,
     apellido_Gerente,
     CURP,
-    birthdate,
-    edad,
+    fechaNac,
     nombre_Tienda,
     tel_Tienda,
     colonia,
@@ -77,19 +76,18 @@ router.post("/gerentessignup", async (req, res) => {
   } = req.body;
 
   if (
-    !correoE ||
-    !nombre_Gerente ||
-    !apellido_Gerente ||
-    !CURP ||
-    !birthdate ||
-    !edad ||
-    !nombre_Tienda ||
-    !tel_Tienda ||
-    !colonia ||
-    !calle ||
-    !cp ||
-    !ciudad ||
-    !num_ext
+      !correoE ||
+      !nombre_Gerente ||
+      !apellido_Gerente ||
+      !CURP ||
+      !fechaNac ||
+      !nombre_Tienda ||
+      !tel_Tienda ||
+      !colonia ||
+      !calle ||
+      !cp ||
+      !ciudad ||
+      !num_ext
   ) {
     return res.status(400).json({
       message: "Se necesitan los datos",
@@ -98,38 +96,43 @@ router.post("/gerentessignup", async (req, res) => {
 
   try {
     const insertQuery =
-      "CALL Insertar_Gerente(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        "CALL Insertar_Gerente(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     conexion.query(
-      insertQuery,
-      [
-        nombre_Gerente,
-        apellido_Gerente,
-        CURP,
-        edad,
-        birthdate,
-        nombre_Tienda,
-        tel_Tienda,
-        colonia,
-        calle,
-        cp,
-        ciudad,
-        num_int,
-        num_ext,
-        correoE,
-      ],
-      (err, result) => {
-        if (err) {
-          console.error("Error registrando gerente:", err.message);
-          return res.status(500).json({ message: "Error en el servidor" });
+        insertQuery,
+        [
+          nombre_Gerente,
+          apellido_Gerente,
+          CURP,
+          fechaNac,
+          nombre_Tienda,
+          tel_Tienda,
+          colonia,
+          calle,
+          cp,
+          ciudad,
+          num_int,
+          num_ext,
+          correoE,
+        ],
+        (err, result) => {
+          if (err) {
+            console.error("Error registrando gerente:", err.message);
+            if (err.code === "ER_SP_WRONG_NO_OF_ARGS") {
+              return res.status(400).json({
+                message: "Número incorrecto de argumentos para el procedimiento",
+              });
+            }
+            return res.status(500).json({ message: "Error en el servidor" });
+          }
+          res.status(201).json({ message: "Gerente registrado exitosamente" });
         }
-        res.status(201).json({ message: "Gerente registrado exitosamente" });
-      }
     );
   } catch (error) {
     console.error("Error en el servidor:", error.message);
     res.status(500).json({ message: "Error en el servidor" });
   }
 });
+
 
 router.post("/proveedoressignup", async (req, res) => {
   const {
