@@ -1,5 +1,4 @@
--- Active: 1715711027341@@127.0.0.1@3306@VendorVision
-	
+
 DELIMITER $$
 
 -- Procedimiento para insertar un nuevo usuario
@@ -89,7 +88,7 @@ BEGIN
     DECLARE id_Usuario INT;
 
     -- Obtener el id del usuario a partir del correoE
-    SELECT id_Usuario INTO id_Usuario FROM Usuario WHERE correoE = correoE;
+    SELECT id_Usuario INTO id_Usuario FROM Usuario WHERE correoE = correoE LIMIT 1;
 
     -- Insertar datos en la tabla Proveedor
     INSERT INTO Proveedor(nombre_Proveedor, apellido_Proveedor, nombre_Empresa) 

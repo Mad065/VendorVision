@@ -1,4 +1,3 @@
--- Active: 1715711027341@@127.0.0.1@3306@VendorVision
 
 CREATE DATABASE VendorVision;
 
@@ -16,7 +15,6 @@ CREATE TABLE Gerente (
     nombre_Gerente VARCHAR(50),
     apellido_Gerente VARCHAR(50),
     CURP VARCHAR(18),
-    edad INT,
     fechaNac DATE
 );
 

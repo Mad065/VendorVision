@@ -3,13 +3,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const form = document.querySelector("form");
   const dateInput = document.getElementById("birthdate");
 
-  dateInput.addEventListener("blur", async () => {
+  dateInput.addEventListener("blur", () => {
     const birthdate = dateInput.value;
-
     const edad = calculateAge(new Date(birthdate));
     if (edad < 18) {
       alert("Debes tener al menos 18 años para registrarte.");
-      return;
     }
   });
 
@@ -20,34 +18,21 @@ document.addEventListener("DOMContentLoaded", () => {
     const name = document.getElementById("name").value;
     const apellidos = document.getElementById("apellidos").value;
     const birthdate = document.getElementById("birthdate").value;
-    const nombre_Tienda = document.getElementById("nombre_Empresa").value;
+    const nombre_Empresa = document.getElementById("nombre_Empresa").value;
     const ciudad = document.getElementById("ciudad").value;
     const colonia = document.getElementById("colonia").value;
     const calle = document.getElementById("calle").value;
     const cp = document.getElementById("cp").value;
-    const n_int = document.getElementById("n_int").value;
+    let n_int = document.getElementById("n_int").value;
     const n_ext = document.getElementById("n_ext").value;
 
-    if (n_int == "") {
+    if (!n_int) {
       n_int = null;
     }
 
     // Validación de campos
-    if (
-      !correoE ||
-      !name ||
-      !apellidos ||
-      !birthdate ||
-      !nombre_Empresa ||
-      !ciudad ||
-      !colonia ||
-      !calle ||
-      !cp ||
-      !n_ext
-    ) {
-      alert(
-        "Por favor, completa todos los campos antes de enviar el formulario."
-      );
+    if (!correoE || !name || !apellidos || !birthdate || !nombre_Empresa || !ciudad || !colonia || !calle || !cp || !n_ext) {
+      alert("Por favor, completa todos los campos antes de enviar el formulario.");
       return;
     }
 
@@ -59,15 +44,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const userData = {
-      correoE: correoE,
-      nombre_Gerente: name,
-      apellido_Gerente: apellidos,
-      birthdate: birthdate,
-      nombre_Empresa: nombre_Empresa,
-      colonia: colonia,
-      calle: calle,
-      cp: cp,
-      ciudad: ciudad,
+      correoE,
+      nombre_Proveedor: name,
+      apellido_Proveedor: apellidos,
+      birthdate,
+      nombre_Empresa,
+      colonia,
+      calle,
+      cp,
+      ciudad,
       num_int: n_int,
       num_ext: n_ext,
     };
@@ -101,10 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let age = today.getFullYear() - birthDate.getFullYear();
     const monthDifference = today.getMonth() - birthDate.getMonth();
 
-    if (
-      monthDifference < 0 ||
-      (monthDifference === 0 && today.getDate() < birthDate.getDate())
-    ) {
+    if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
       age--;
     }
 

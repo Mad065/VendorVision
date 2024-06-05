@@ -165,13 +165,12 @@ router.post("/proveedoressignup", async (req, res) => {
 
   try {
     const insertQuery =
-      "CALL Insertar_Gerente(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+      "CALL Insertar_Proveedor(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     conexion.query(
       insertQuery,
       [
         nombre_Proveedor,
         apellido_Proveedor,
-        birthdate,
         nombre_Empresa,
         colonia,
         calle,
