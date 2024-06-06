@@ -15,18 +15,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Validación de campos
     if (
-      !clave ||
-      !nombre ||
-      !caducidad ||
-      !descripcion ||
-      !ganancia ||
-      !inversion ||
-      !cantidad ||
-      !peso
+        !clave ||
+        !nombre ||
+        !caducidad ||
+        !descripcion ||
+        !ganancia ||
+        !inversion ||
+        !cantidad ||
+        !peso
     ) {
-      alert(
-        "Por favor, completa todos los campos antes de enviar el formulario."
-      );
+      alert("Por favor, completa todos los campos antes de enviar el formulario.");
       return;
     }
 

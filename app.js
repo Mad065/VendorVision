@@ -356,47 +356,61 @@ router.post("/vender-producto", verifyToken, (req, res) => {
 });
 
 router.post("/registrar_producto", (req, res) => {
-  const data = req.body;
+  const {
+    clave,
+    nombre_Producto,
+    descripcion,
+    caducidad,
+    Tipo_Producto,
+    cantidad,
+    precio,
+    cantidad_Vendida,
+    cantidad_Comprada,
+  } = req.body;
 
-  const p_clave = data.clave;
-  const p_nombre_Producto = data.nombre_Producto;
-  const p_descripcion = data.descripcion;
-  const p_caducidad = data.caducidad;
-  const p_id_Tipo_Producto = data.id_Tipo_Producto;
-  const p_cantidad = data.cantidad;
-  const p_ganancia = data.ganancia;
-  const p_inversion = data.inversion;
-  const p_cantidad_Vendida = data.cantidad_Vendida;
-  const p_cantidad_Comprada = data.cantidad_Comprada;
-  const p_id_Proveedor = data.id_Proveedor;
+  // Validación de campos
+  if (
+      !clave ||
+      !nombre_Producto ||
+      !descripcion ||
+      !caducidad ||
+      !Tipo_Producto ||
+      !precio ||
+      !cantidad_Vendida ||
+      !cantidad_Comprada
+  ) {
+    res.status(400).json({ message: "Todos los campos son requeridos" });
+    return;
+  }
 
   const query = `CALL RegistrarProducto(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
   conexion.query(
-    query,
-    [
-      p_clave,
-      p_nombre_Producto,
-      p_descripcion,
-      p_caducidad,
-      p_id_Tipo_Producto,
-      p_cantidad,
-      p_ganancia,
-      p_inversion,
-      p_cantidad_Vendida,
-      p_cantidad_Comprada,
-      p_id_Proveedor,
-    ],
-    (error, results) => {
-      if (error) {
-        console.error("Error ejecutando el procedimiento almacenado:", error);
-        res.status(400).json({ message: error.message });
-        return;
+      query,
+      [
+        clave,
+        nombre_Producto,
+        descripcion,
+        caducidad,
+        id_Tipo_Producto,
+        cantidad,
+        ganancia,
+        inversion,
+        cantidad_Vendida,
+        cantidad_Comprada,
+        id_Proveedor,
+      ],
+      (error, results) => {
+        if (error) {
+          console.error("Error ejecutando el procedimiento almacenado:", error);
+          res.status(400).json({ message: error.message });
+          return;
+        }
+        res.status(201).json({ message: "Producto registrado exitosamente" });
       }
-      res.status(201).json({ message: "Producto registrado exitosamente" });
-    }
   );
 });
+
 
 // Obtener gerentes
 router.get("/proveedoresgerentes", verifyToken, (req, res) => {
