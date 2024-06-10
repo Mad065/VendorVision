@@ -1,6 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
   const token = localStorage.getItem("token");
   const form = document.querySelector("form");
+  const claveInput = document.getElementById("clave");
+  const cantidadInput = document.getElementById("cantidad");
+
+  let cantidadTotal = 0;
+  let subtotal = 0;
 
   if (!token) {
     alert("Por favor, inicia sesión primero.");
@@ -11,13 +16,12 @@ document.addEventListener("DOMContentLoaded", () => {
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
 
-    const clave = document.getElementById("clave").value;
+    const clave = claveInput.value;
+    const cantidad = parseInt(cantidadInput.value);
 
     // Validación de campos
-    if (!clave) {
-      alert(
-        "Por favor, completa todos los campos antes de añadir un producto."
-      );
+    if (!clave || isNaN(cantidad) || cantidad <= 0) {
+      alert("Por favor, completa todos los campos antes de añadir un producto.");
       return;
     }
 
@@ -37,66 +41,65 @@ document.addEventListener("DOMContentLoaded", () => {
       const data = await response.json();
 
       if (data.productos.length === 0) {
-        alert("No hay ningun producto registrado");
+        alert("No hay ningún producto registrado con esa clave");
+        return;
+      }
+
+      // Verificar la cantidad disponible
+      const producto = data.productos[0]; // Suponiendo que solo devuelve un producto
+      const cantidadDisponible = producto.cantidad;
+
+      if (cantidad > cantidadDisponible) {
+        alert("La cantidad solicitada es mayor a la cantidad disponible");
         return;
       }
 
       const productosContainer = document.getElementById("productos-container");
-      productosContainer.innerHTML = ""; // Limpiar el contenedor antes de insertar nuevos productos
+      let contenidoPrevio = productosContainer.innerHTML;
 
-      let subtotal = 0;
-      let cantidadProductos = data.productos.length;
-      const fechaCompra = new Date().toLocaleDateString();
+      const precioProducto = producto.precio + producto.ganancia;
+      subtotal += precioProducto * cantidad;
+      cantidadTotal += cantidad;
 
-      // Iterar sobre los datos de los productos y crear una card para cada uno
-      data.productos.forEach((producto) => {
-        const precioProducto = producto.ganancia + producto.inversion;
-        subtotal += precioProducto;
-
-        const productoHTML = `
-          <div class="d-flex justify-content-between">
-            <div>
-              <h6 class="card-black-title mb-2">${producto.nombre_Producto}</h6>
-              <p class="description-producs">${producto.descripcion}</p>
-            </div>
-            <div>
-              <p class="card-black-text">Precio: ${precioProducto}</p>
-              <p class="card-black-text">Cantidad: ${producto.cantidad}</p>
-              <p class="card-black-text">${producto.peso} ${producto.tipo_Producto}</p>
-            </div>
+      const productoHTML = `
+        <div class="d-flex justify-content-between">
+          <div>
+            <h6 class="card-black-title mb-2">${producto.nombre_Producto}</h6>
+            <p class="description-producs">${producto.descripcion}</p>
           </div>
-          <div class="d-flex justify-content-between align-items-center mt-3">
-            <div class="input-group">
-              <select class="form-select cantidad-select" aria-label="Cantidad">
-                <option selected>Cantidad</option>
-              </select>
-              <button class="btn btn-primary ms-2 vender-btn" data-id="${producto.id_Producto}">Vender</button>
-            </div>
+          <div>
+            <p class="card-black-text">Precio: ${precioProducto}</p>
+            <p class="card-black-text">Tipo producto: ${producto.tipo_Producto}</p>
           </div>
-          <hr class="featurette-divider" />
-        `;
-        productosContainer.insertAdjacentHTML("beforeend", productoHTML);
+        </div>
+        <div class="d-flex justify-content-between align-items-center mt-3">
+          <div class="input-group">
+            <label for="cantidad-disponible" class="input-label">Cantidad:</label>
+            <select class="form-select cantidad-select" id="cantidad-disponible" aria-label="Cantidad">
+              ${populateSelectOptions(producto.cantidad, cantidad)}
+            </select>
+          </div>
+        </div>
+        <hr class="featurette-divider" />
+      `;
 
-        // Llenar el select con la cantidad según el stock del producto
-        const selectElement = productosContainer.querySelector(
-          ".cantidad-select:last-child"
-        );
-        populateSelect(selectElement, producto.cantidad);
-      });
+      productosContainer.innerHTML = contenidoPrevio + productoHTML;
 
       // Actualizar la fecha de compra, cantidad de productos, subtotal y precio total en el HTML
       const fechaCompraText = document.getElementById("fecha-compra");
-      const cantidadProductosText =
-        document.getElementById("cantidad-productos");
+      const cantidadProductosText = document.getElementById("cantidad-productos");
       const subtotalText = document.getElementById("subtotal-text");
       const precioTotalText = document.getElementById("precio-total");
 
+      const fechaCompra = new Date().toLocaleDateString();
       fechaCompraText.textContent = `Fecha de compra: ${fechaCompra}`;
-      cantidadProductosText.textContent = `Cantidad de productos: ${cantidadProductos}`;
+      cantidadProductosText.textContent = `Cantidad de productos: ${cantidadTotal}`;
       subtotalText.textContent = `Subtotal: $${subtotal.toFixed(2)}`;
-      precioTotalText.textContent = `Precio total de venta: $${subtotal.toFixed(
-        2
-      )}`;
+      precioTotalText.textContent = `Precio total de venta: $${subtotal.toFixed(2)}`;
+
+      // Limpiar los campos de entrada después de agregar contenido al HTML
+      claveInput.value = "";
+      cantidadInput.value = "";
 
       // Agregar evento de venta a los botones
       const venderBtns = document.querySelectorAll(".vender-btn");
@@ -134,20 +137,17 @@ document.addEventListener("DOMContentLoaded", () => {
             // Actualizar el frontend para reflejar el cambio en el stock
             cantidadSelect.value = "Cantidad";
             const producto = data.productos.find(
-              (p) => p.id_Producto === idProducto
+                (p) => p.id_Producto === idProducto
             );
             producto.cantidad -= cantidadVendida;
 
             // Volver a calcular y actualizar el subtotal y cantidad de productos
-            subtotal -=
-              (producto.ganancia + producto.inversion) * cantidadVendida;
-            cantidadProductos -= cantidadVendida;
+            subtotal -= (producto.ganancia + producto.inversion) * cantidadVendida;
+            cantidadTotal -= cantidadVendida;
 
-            cantidadProductosText.textContent = `Cantidad de productos: ${cantidadProductos}`;
+            cantidadProductosText.textContent = `Cantidad de productos: ${cantidadTotal}`;
             subtotalText.textContent = `Subtotal: $${subtotal.toFixed(2)}`;
-            precioTotalText.textContent = `Precio total de venta: $${subtotal.toFixed(
-              2
-            )}`;
+            precioTotalText.textContent = `Precio total de venta: $${subtotal.toFixed(2)}`;
           } catch (error) {
             console.error("Error:", error.message);
             alert("Error al vender el producto.");
@@ -161,18 +161,13 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Función para llenar el <select> basado en el stock
-  function populateSelect(selectElement, stock) {
-    // Limpiar las opciones actuales (excepto la primera opción)
-    while (selectElement.options.length > 1) {
-      selectElement.remove(1);
+  function populateSelectOptions(stock, cantidadSeleccionada) {
+    let options = '<option value="Cantidad">Cantidad</option>';
+
+    for (let i = 1; i <= stock; i++) {
+      options += `<option value="${i}" ${i === cantidadSeleccionada ? 'selected' : ''}>${i}</option>`;
     }
 
-    // Crear opciones basadas en el stock
-    for (let i = 1; i <= stock; i++) {
-      const option = document.createElement("option");
-      option.value = i;
-      option.textContent = i;
-      selectElement.appendChild(option);
-    }
+    return options;
   }
 });

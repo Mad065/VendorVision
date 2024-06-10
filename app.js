@@ -452,7 +452,6 @@ router.post("/registrar_producto", (req, res) => {
   );
 });
 
-
 // Obtener gerentes
 router.get("/proveedoresgerentes", verifyToken, (req, res) => {
   try {
