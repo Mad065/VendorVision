@@ -30,9 +30,30 @@ document.addEventListener("DOMContentLoaded", () => {
           console.log("Token guardado en localStorage");
         }
 
-        alert("Inicio de sesión realizado exitosamente");
-        // Redirige al usuario a la página de proveedores
-        window.location.href = "/gerentes/Inicio.html";
+        // Verificar el rol del usuario
+        const roleResponse = await fetch(`/api/check-role?email=${encodeURIComponent(email)}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${result.token}`, // Enviar el token en el encabezado de autorización
+          },
+        });
+
+        if (roleResponse.ok) {
+          const roleResult = await roleResponse.json();
+          const userRole = roleResult.role;
+
+          if (userRole === "gerente") {
+            window.location.href = "/gerentes/Inicio.html";
+          } else if (userRole === "proveedor") {
+            window.location.href = "/proveedores/Inicio.html";
+          } else {
+            alert("Rol desconocido");
+          }
+        } else {
+          const errorData = await roleResponse.json();
+          alert(`Error al verificar el rol: ${errorData.message}`);
+        }
       } else {
         const errorData = await response.json();
         alert(`Error: ${errorData.message}`);

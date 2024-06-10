@@ -106,7 +106,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (response.ok) {
         const result = await response.json();
-        localStorage.setItem("correoE", correoE);
+        localStorage.setItem("correoE", email);
         localStorage.setItem("nombre_Usuario", username);
         localStorage.setItem("contraseña", password);
         localStorage.setItem("accountType", accountType);

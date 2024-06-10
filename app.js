@@ -188,7 +188,7 @@ router.post("/proveedoressignup", async (req, res) => {
           console.error("Error registrando gerente:", err.message);
           return res.status(500).json({ message: "Error en el servidor" });
         }
-        res.status(201).json({ message: "Gerente registrado exitosamente" });
+        res.status(201).json({ message: "Prooveedor registrado exitosamente" });
       }
     );
   } catch (error) {
@@ -292,6 +292,54 @@ router.post("/login", async (req, res) => {
   }
 });
 
+router.get('/check-role', (req, res) => {
+  const { email } = req.query;
+
+  if (!email) {
+    return res.status(400).send({ error: 'El correo electrónico es requerido' });
+  }
+
+  // Consulta para verificar si el usuario es un gerente
+  const queryGerente = `
+        SELECT g.id_Gerente
+        FROM Gerente g
+        INNER JOIN Rel_Usuario_Gerente rug ON g.id_Gerente = rug.id_Gerente
+        INNER JOIN Usuario u ON rug.id_Usuario = u.id_Usuario
+        WHERE u.correoE = ?`;
+
+  // Consulta para verificar si el usuario es un proveedor
+  const queryProveedor = `
+        SELECT p.id_Proveedor
+        FROM Proveedor p
+        INNER JOIN Rel_Usuario_Proveedor rup ON p.id_Proveedor = rup.id_Proveedor
+        INNER JOIN Usuario u ON rup.id_Usuario = u.id_Usuario
+        WHERE u.correoE = ?`;
+
+  conexion.query(queryGerente, [email], (err, results) => {
+    if (err) {
+      console.error('Error en la consulta de gerente:', err.stack);
+      return res.status(500).send({ error: 'Error en el servidor' });
+    }
+
+    if (results.length > 0) {
+      return res.send({ role: 'gerente', id_Gerente: results[0].id_Gerente });
+    }
+
+    conexion.query(queryProveedor, [email], (err, results) => {
+      if (err) {
+        console.error('Error en la consulta de proveedor:', err.stack);
+        return res.status(500).send({ error: 'Error en el servidor' });
+      }
+
+      if (results.length > 0) {
+        return res.send({ role: 'proveedor', id_Proveedor: results[0].id_Proveedor });
+      } else {
+        return res.send({ role: 'no encontrado' });
+      }
+    });
+  });
+});
+
 router.get("/productos", verifyToken, (req, res) => {
   const { clave } = req.query;
 
@@ -361,11 +409,9 @@ router.post("/registrar_producto", (req, res) => {
     nombre_Producto,
     descripcion,
     caducidad,
-    Tipo_Producto,
-    cantidad,
+    tipo_Producto,
     precio,
-    cantidad_Vendida,
-    cantidad_Comprada,
+    correoE
   } = req.body;
 
   // Validación de campos
@@ -374,16 +420,15 @@ router.post("/registrar_producto", (req, res) => {
       !nombre_Producto ||
       !descripcion ||
       !caducidad ||
-      !Tipo_Producto ||
+      !tipo_Producto ||
       !precio ||
-      !cantidad_Vendida ||
-      !cantidad_Comprada
+      !correoE
   ) {
     res.status(400).json({ message: "Todos los campos son requeridos" });
     return;
   }
 
-  const query = `CALL RegistrarProducto(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+  const query = `CALL RegistrarProducto(?, ?, ?, ?, ?, ?, ?)`;
 
   conexion.query(
       query,
@@ -392,13 +437,9 @@ router.post("/registrar_producto", (req, res) => {
         nombre_Producto,
         descripcion,
         caducidad,
-        id_Tipo_Producto,
-        cantidad,
-        ganancia,
-        inversion,
-        cantidad_Vendida,
-        cantidad_Comprada,
-        id_Proveedor,
+        tipo_Producto,
+        precio,
+        correoE
       ],
       (error, results) => {
         if (error) {

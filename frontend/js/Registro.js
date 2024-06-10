@@ -5,42 +5,32 @@ document.addEventListener("DOMContentLoaded", () => {
     event.preventDefault();
 
     const clave = document.getElementById("clave").value;
-    const nombre = document.getElementById("nombre_Producto").value;
+    const nombre_Producto = document.getElementById("nombre_Producto").value;
     const caducidad = document.getElementById("caducidad").value;
     const descripcion = document.getElementById("descripcion").value;
-    const ganancia = document.getElementById("ganancia").value;
-    const inversion = document.getElementById("inversion").value;
-    const cantidad = document.getElementById("cantidad").value;
-    const peso = document.getElementById("peso").value;
+    const tipo_Producto = document.getElementById("tipo").value;
+    const precio = document.getElementById("precio").value;
+    const correoE = document.getElementById("correoE").value;
 
     // Validación de campos
-    if (
-        !clave ||
-        !nombre ||
-        !caducidad ||
-        !descripcion ||
-        !ganancia ||
-        !inversion ||
-        !cantidad ||
-        !peso
-    ) {
+    if (!clave || !nombre_Producto || !caducidad || !descripcion || !tipo_Producto || !precio || !correoE) {
+      console.log("Por favor, completa todos los campos antes de enviar el formulario.")
       alert("Por favor, completa todos los campos antes de enviar el formulario.");
       return;
     }
 
     const producto = {
       clave,
-      nombre,
-      caducidad,
+      nombre_Producto,
       descripcion,
-      ganancia,
-      inversion,
-      cantidad,
-      peso,
+      caducidad,
+      tipo_Producto,
+      precio,
+      correoE
     };
 
     try {
-      const response = await fetch("/api/productos", {
+      const response = await fetch("/api/registrar_producto", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
