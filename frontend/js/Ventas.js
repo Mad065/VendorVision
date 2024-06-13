@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let cantidadTotal = 0;
   let subtotal = 0;
+  let productosSeleccionados = []; // Lista de productos seleccionados
 
   if (!token) {
     alert("Por favor, inicia sesión primero.");
@@ -54,14 +55,16 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
+      productosSeleccionados.push({ id: producto.id_Producto, cantidad }); // Añadir producto a la lista
+
       const productosContainer = document.getElementById("productos-container");
       let contenidoPrevio = productosContainer.innerHTML;
 
-      const precioProducto = producto.precio + producto.ganancia;
+      const precioProducto = producto.precio;
       subtotal += precioProducto * cantidad;
       cantidadTotal += cantidad;
 
-      const productoHTML = `
+      contenidoPrevio += `
         <div class="d-flex justify-content-between">
           <div>
             <h6 class="card-black-title mb-2">${producto.nombre_Producto}</h6>
@@ -83,91 +86,62 @@ document.addEventListener("DOMContentLoaded", () => {
         <hr class="featurette-divider" />
       `;
 
-      productosContainer.innerHTML = contenidoPrevio + productoHTML;
+      productosContainer.innerHTML = contenidoPrevio;
 
-      // Actualizar la fecha de compra, cantidad de productos, subtotal y precio total en el HTML
-      const fechaCompraText = document.getElementById("fecha-compra");
-      const cantidadProductosText = document.getElementById("cantidad-productos");
-      const subtotalText = document.getElementById("subtotal-text");
-      const precioTotalText = document.getElementById("precio-total");
+      document.getElementById("subtotal-text").innerText = `Subtotal (${cantidadTotal}): ${subtotal}`;
+      document.getElementById("cantidad-productos").innerText = `Cantidad de productos: ${cantidadTotal}`;
+      document.getElementById("precio-total").innerText = `Precio total de venta: ${subtotal}`;
 
-      const fechaCompra = new Date().toLocaleDateString();
-      fechaCompraText.textContent = `Fecha de compra: ${fechaCompra}`;
-      cantidadProductosText.textContent = `Cantidad de productos: ${cantidadTotal}`;
-      subtotalText.textContent = `Subtotal: $${subtotal.toFixed(2)}`;
-      precioTotalText.textContent = `Precio total de venta: $${subtotal.toFixed(2)}`;
+      claveInput.value = '';
+      cantidadInput.value = '';
 
-      // Limpiar los campos de entrada después de agregar contenido al HTML
-      claveInput.value = "";
-      cantidadInput.value = "";
-
-      // Agregar evento de venta a los botones
-      const venderBtns = document.querySelectorAll(".vender-btn");
-      venderBtns.forEach((btn) => {
-        btn.addEventListener("click", async () => {
-          const idProducto = btn.dataset.id;
-          const cantidadSelect = btn.previousElementSibling;
-          const cantidadVendida = parseInt(cantidadSelect.value);
-
-          if (cantidadVendida <= 0 || isNaN(cantidadVendida)) {
-            alert("Por favor, selecciona una cantidad válida para vender.");
-            return;
-          }
-
-          try {
-            const sellResponse = await fetch("/api/productos/vender-producto", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-              },
-              body: JSON.stringify({
-                idProducto,
-                cantidadVendida,
-              }),
-            });
-
-            if (!sellResponse.ok) {
-              throw new Error("Error al vender el producto");
-            }
-
-            const sellData = await sellResponse.json();
-            alert(sellData.message);
-
-            // Actualizar el frontend para reflejar el cambio en el stock
-            cantidadSelect.value = "Cantidad";
-            const producto = data.productos.find(
-                (p) => p.id_Producto === idProducto
-            );
-            producto.cantidad -= cantidadVendida;
-
-            // Volver a calcular y actualizar el subtotal y cantidad de productos
-            subtotal -= (producto.ganancia + producto.inversion) * cantidadVendida;
-            cantidadTotal -= cantidadVendida;
-
-            cantidadProductosText.textContent = `Cantidad de productos: ${cantidadTotal}`;
-            subtotalText.textContent = `Subtotal: $${subtotal.toFixed(2)}`;
-            precioTotalText.textContent = `Precio total de venta: $${subtotal.toFixed(2)}`;
-          } catch (error) {
-            console.error("Error:", error.message);
-            alert("Error al vender el producto.");
-          }
-        });
-      });
     } catch (error) {
-      console.error("Error:", error.message);
-      alert("Error al obtener los datos del producto.");
+      alert("Hubo un error al añadir el producto: " + error.message);
     }
   });
 
-  // Función para llenar el <select> basado en el stock
-  function populateSelectOptions(stock, cantidadSeleccionada) {
-    let options = '<option value="Cantidad">Cantidad</option>';
+  document.getElementById("vender").addEventListener("click", async () => {
+    const correoGerente = localStorage.getItem("correoE");
 
-    for (let i = 1; i <= stock; i++) {
-      options += `<option value="${i}" ${i === cantidadSeleccionada ? 'selected' : ''}>${i}</option>`;
+    if (productosSeleccionados.length === 0) {
+      alert("No hay productos para vender.");
+      return;
     }
 
-    return options;
-  }
+    try {
+      const response = await fetch('/api/realizar-venta', {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ productos: productosSeleccionados, correoGerente })
+      });
+
+      if (!response.ok) {
+        throw new Error("Error al procesar la venta");
+      }
+
+      alert("Venta procesada con éxito.");
+      // Resetear los datos después de la venta
+      productosSeleccionados = [];
+      cantidadTotal = 0;
+      subtotal = 0;
+      document.getElementById("productos-container").innerHTML = '';
+      document.getElementById("subtotal-text").innerText = 'Subtotal (0): 0';
+      document.getElementById("cantidad-productos").innerText = 'Cantidad de productos: 0';
+      document.getElementById("precio-total").innerText = 'Precio total de venta: 0';
+
+    } catch (error) {
+      alert("Hubo un error al procesar la venta: " + error.message);
+    }
+  });
 });
+
+function populateSelectOptions(max, selected) {
+  let options = '';
+  for (let i = 1; i <= max; i++) {
+    options += `<option value="${i}" ${i === selected ? 'selected' : ''}>${i}</option>`;
+  }
+  return options;
+}

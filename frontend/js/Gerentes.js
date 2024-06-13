@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Realizar una solicitud GET a la API para obtener los datos de los gerentes
-  fetch("/api/proveedoresgerentes", {
+  fetch("/api/obtener-gerentes", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

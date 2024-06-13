@@ -133,7 +133,6 @@ router.post("/gerentessignup", async (req, res) => {
   }
 });
 
-
 router.post("/proveedoressignup", async (req, res) => {
   const {
     correoE,
@@ -221,6 +220,7 @@ router.post("/correo-disponible", (req, res) => {
   }
 });
 
+// Verificar si el CURP ya está registrado
 router.post("/curp-disponible", (req, res) => {
   const { CURP } = req.body;
 
@@ -292,6 +292,7 @@ router.post("/login", async (req, res) => {
   }
 });
 
+// Revisar si es gerente o proveedor
 router.get('/check-role', (req, res) => {
   const { email } = req.query;
 
@@ -340,6 +341,7 @@ router.get('/check-role', (req, res) => {
   });
 });
 
+// Obtener los datos del producto (Ventas.js)
 router.get("/productos", verifyToken, (req, res) => {
   const { clave } = req.query;
 
@@ -365,44 +367,70 @@ router.get("/productos", verifyToken, (req, res) => {
   }
 });
 
-// Ruta para restar el stock del producto vendido
-router.post("/vender-producto", verifyToken, (req, res) => {
-  const { idProducto, cantidadVendida } = req.body;
+// Obtener stock de proveedores
+router.get("/stock-proveedor", verifyToken, (req, res) => {
+  const correoE = req.query;
 
-  if (!idProducto || !cantidadVendida) {
-    return res
-      .status(400)
-      .json({ message: "ID del producto y cantidad vendida son requeridos" });
+  if (!correoE) {
+    return res.status(400).json({ message: "Se requiere el correo electrónico del proveedor" });
   }
 
   try {
-    const query = `
-      UPDATE Producto 
-      SET cantidad = cantidad - ? 
-      WHERE id_Producto = ? AND cantidad >= ?;
-    `;
-    conexion.query(
-      query,
-      [cantidadVendida, idProducto, cantidadVendida],
-      (err, results) => {
-        if (err) {
-          console.error("Error al actualizar el stock:", err.message);
-          return res.status(500).json({ message: "Error en el servidor" });
-        }
-        if (results.affectedRows === 0) {
-          return res
-            .status(400)
-            .json({ message: "Stock insuficiente o producto no encontrado" });
-        }
-        res.status(200).json({ message: "Stock actualizado correctamente" });
+    const query = "CALL Obtener_Stock_Proveedores(?);";
+    conexion.query(query, [correoE], (err, results) => {
+      if (err) {
+        console.error("Error al obtener el stock de los proveedores:", err.message);
+        return res.status(500).json({ message: "Error en el servidor" });
       }
-    );
+      res.status(200).json({ stockProveedores: results[0] });
+      console.log("Stock de proveedores obtenido correctamente");
+    });
   } catch (error) {
     console.error("Error en el servidor:", error.message);
     res.status(500).json({ message: "Error en el servidor" });
   }
 });
 
+// Obtener stock de gerente
+router.get("/stock-gerente", verifyToken, (req, res) => {
+  const correoE = req.query.correoE;
+
+  if (!correoE) {
+    return res.status(400).json({ message: "Se requiere el correo electrónico del gerente" });
+  }
+
+  try {
+    const query = "CALL Obtener_Stock_Gerente(?);";
+    conexion.query(query, [correoE], (err, results) => {
+      if (err) {
+        console.error("Error al obtener el stock del gerente:", err.message);
+        return res.status(500).json({ message: "Error en el servidor" });
+      }
+      res.status(200).json({ stockGerente: results[0] });
+      console.log("Stock del gerente obtenido correctamente");
+    });
+  } catch (error) {
+    console.error("Error en el servidor:", error.message);
+    res.status(500).json({ message: "Error en el servidor" });
+  }
+});
+
+// Realizar venta
+router.post("/realizar-venta", (req, res) => {
+  const { productos, correoGerente } = req.body;
+  const fechaVenta = new Date().toISOString().split('T')[0]; // Fecha de la venta en formato YYYY-MM-DD
+
+  const productosJSON = JSON.stringify(productos);
+
+  conexion.query('CALL realizar_venta(?, ?, ?)', [correoGerente, fechaVenta, productosJSON], (err, results) => {
+    if (err) {
+      return res.status(500).send('Error al realizar la venta');
+    }
+    res.send('Venta realizada con éxito');
+  });
+});
+
+// Registrar producto
 router.post("/registrar_producto", (req, res) => {
   const {
     clave,
@@ -453,7 +481,7 @@ router.post("/registrar_producto", (req, res) => {
 });
 
 // Obtener gerentes
-router.get("/proveedoresgerentes", verifyToken, (req, res) => {
+router.get("/obtener-gerentes", verifyToken, (req, res) => {
   try {
     // Ejecutar el procedimiento almacenado para obtener los datos de los gerentes
     conexion.query("CALL ObtenerDatosGerentes()", (err, results) => {
@@ -472,16 +500,72 @@ router.get("/proveedoresgerentes", verifyToken, (req, res) => {
   }
 });
 
-// Obtener pedidos
-router.get("/pedidos", verifyToken, (req, res) => {
+// Obtener proveedores
+router.get("/obtener-proveedores", verifyToken, (req, res) => {
   try {
-    const query = "CALL ObtenerDatosPedidos();";
-    conexion.query(query, (err, results) => {
+    // Ejecutar el procedimiento almacenado para obtener los datos de los proveedores
+    conexion.query("CALL ObtenerDatosProveedores()", (err, results) => {
       if (err) {
-        console.error(
-          "Error al obtener los datos de los pedidos:",
-          err.message
-        );
+        console.error("Error al obtener datos de los proveedores:", err.message);
+        return res.status(500).json({ message: "Error en el servidor" });
+      }
+
+      // Enviar los resultados como respuesta
+      res.status(200).json({ proveedores: results[0] });
+      console.log("Proveedores obtenidos correctamente");
+    });
+  } catch (error) {
+    console.error("Error en el servidor:", error.message);
+    res.status(500).json({ message: "Error en el servidor" });
+  }
+});
+
+// Hacer pedido
+router.post("/hacer_pedido", async (req, res) => {
+  try {
+    // Aquí recibes los detalles del pedido desde el cuerpo de la solicitud
+    const {
+      clave_producto,
+      correo_usuario,
+      cantidad_pedida,
+      fecha_pedido
+    } = req.body;
+
+    // Llamada al procedimiento almacenado para insertar el pedido
+    connection.query(
+        "CALL InsertarPedido(?, ?, ?, ?)",
+        [clave_producto, correo_usuario, cantidad_pedida, fecha_pedido],
+        (error, results) => {
+          if (error) {
+            console.error("Error al insertar el pedido:", error.message);
+            res.status(500).json({ message: "Error al procesar el pedido" });
+          } else {
+            console.log("Pedido realizado con éxito");
+            res.status(200).json({ message: "Pedido realizado con éxito" });
+          }
+        }
+    );
+  } catch (error) {
+    console.error("Error:", error.message);
+    res.status(500).json({ message: "Error al procesar el pedido" });
+  }
+});
+
+// Obtener pedidos
+router.get("/obtener_pedidos_proveedor", verifyToken, (req, res) => {
+  const { correoE } = req.query;
+
+  if (!correoE) {
+    return res.status(400).json({ message: "Correo del proveedor es requerido" });
+  }
+
+  try {
+
+    // Llamar al procedimiento almacenado con el correo del proveedor
+    const query = "CALL ObtenerPedidosProveedor(?);";
+    conexion.query(query, [correoE], (err, results) => {
+      if (err) {
+        console.error("Error al obtener los datos de los pedidos:", err.message);
         return res.status(500).json({ message: "Error en el servidor" });
       }
       res.status(200).json({ pedidos: results[0] });
@@ -490,6 +574,141 @@ router.get("/pedidos", verifyToken, (req, res) => {
   } catch (error) {
     console.error("Error en el servidor:", error.message);
     res.status(500).json({ message: "Error en el servidor" });
+  }
+});
+
+router.post('/confirmar_pedido', verifyToken, async (req, res) => {
+  const { id_Pedido } = req.body;
+
+  if (!id_Pedido) {
+    return res.status(400).json({ success: false, message: 'El ID del pedido es requerido' });
+  }
+
+  try {
+    const [result] = await pool.query('UPDATE Pedido SET confirmado = 1 WHERE id_Pedido = ?', [id_Pedido]);
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ success: false, message: 'Pedido no encontrado' });
+    }
+
+    res.json({ success: true, message: 'Pedido confirmado exitosamente' });
+  } catch (error) {
+    console.error('Error al confirmar el pedido:', error);
+    res.status(500).json({ success: false, message: 'Error interno del servidor' });
+  }
+});
+
+// Obtener pedidos
+router.get("/obtener_pedidos_gerente", verifyToken, (req, res) => {
+  const { correoE } = req.query;
+
+  if (!correoE) {
+    return res.status(400).json({ message: "Correo del proveedor es requerido" });
+  }
+
+  try {
+
+    // Llamar al procedimiento almacenado con el correo del proveedor
+    const query = "CALL ObtenerPedidosGerente(?);";
+    conexion.query(query, [correoE], (err, results) => {
+      if (err) {
+        console.error("Error al obtener los datos de los pedidos:", err.message);
+        return res.status(500).json({ message: "Error en el servidor" });
+      }
+      res.status(200).json({ pedidos: results[0] });
+      console.log("Pedidos obtenidos correctamente");
+    });
+  } catch (error) {
+    console.error("Error en el servidor:", error.message);
+    res.status(500).json({ message: "Error en el servidor" });
+  }
+});
+
+router.post('/marcar_entregado', verifyToken, async (req, res) => {
+  const { id_Pedido } = req.body;
+
+  if (!id_Pedido) {
+    return res.status(400).json({ success: false, message: 'El ID del pedido es requerido' });
+  }
+
+  try {
+    const [result] = await pool.query('UPDATE Pedido SET entregado = 1 WHERE id_Pedido = ?', [id_Pedido]);
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ success: false, message: 'Pedido no encontrado' });
+    }
+
+    res.json({ success: true, message: 'Pedido marcado como entregado' });
+  } catch (error) {
+    console.error('Error al marcar como entregado:', error);
+    res.status(500).json({ success: false, message: 'Error interno del servidor' });
+  }
+});
+
+// Obtener producto por clave
+router.get('/obtener_producto', verifyToken, async (req, res) => {
+  const { clave } = req.query;
+
+  if (!clave) {
+    return res.status(400).json({ success: false, message: 'La clave del producto es requerida' });
+  }
+
+  try {
+    const [rows] = await pool.query('CALL Obtener_Producto_Por_Clave(?)', [clave]);
+
+    if (rows.length === 0) {
+      return res.status(404).json({ success: false, message: 'Producto no encontrado' });
+    }
+
+    res.json({ success: true, producto: rows[0] });
+  } catch (error) {
+    console.error('Error al obtener el producto:', error);
+    res.status(500).json({ success: false, message: 'Error interno del servidor' });
+  }
+});
+
+// Modificar producto
+router.post('/modificar_producto', verifyToken, async (req, res) => {
+  const { clave, nombre_Producto, descripcion, caducidad, precio, tipo_Producto } = req.body;
+
+  if (!clave || !nombre_Producto || !descripcion || !caducidad || !precio || !tipo_Producto) {
+    return res.status(400).json({ success: false, message: 'Todos los campos son requeridos' });
+  }
+
+  try {
+    const [tipoProductoIdResult] = await pool.query('SELECT id_Tipo_Producto FROM Cat_Tipo_Producto WHERE tipo_Producto = ?', [tipo_Producto]);
+
+    if (tipoProductoIdResult.length === 0) {
+      return res.status(404).json({ success: false, message: 'Tipo de producto no encontrado' });
+    }
+
+    const id_Tipo_Producto = tipoProductoIdResult[0].id_Tipo_Producto;
+
+    await pool.query('CALL Modificar_Producto(?, ?, ?, ?, ?, ?)', [clave, nombre_Producto, descripcion, caducidad, precio, tipo_Producto]);
+
+    res.json({ success: true, message: 'Producto modificado exitosamente' });
+  } catch (error) {
+    console.error('Error al modificar el producto:', error);
+    res.status(500).json({ success: false, message: 'Error interno del servidor' });
+  }
+});
+
+// Modificar ganancia de un producto
+router.post('/modificar_ganancia_producto', verifyToken, async (req, res) => {
+  const { clave, ganancia } = req.body;
+
+  if (!clave || !ganancia) {
+    return res.status(400).json({ success: false, message: 'La clave del producto y la nueva ganancia son requeridas' });
+  }
+
+  try {
+    // Llamar al procedimiento almacenado para modificar la ganancia del producto
+    await pool.query('CALL Modificar_Ganancia_Producto(?, ?)', [clave, ganancia]);
+
+    res.json({ success: true, message: 'Ganancia del producto modificada exitosamente' });
+  } catch (error) {
+    console.error('Error al modificar la ganancia del producto:', error);
+    res.status(500).json({ success: false, message: 'Error interno del servidor' });
   }
 });
 

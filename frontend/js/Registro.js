@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const descripcion = document.getElementById("descripcion").value;
     const tipo_Producto = document.getElementById("tipo").value;
     const precio = document.getElementById("precio").value;
-    const correoE = document.getElementById("correoE").value;
+    const correoE = localStorage.getItem("correoE");
 
     // Validación de campos
     if (!clave || !nombre_Producto || !caducidad || !descripcion || !tipo_Producto || !precio || !correoE) {

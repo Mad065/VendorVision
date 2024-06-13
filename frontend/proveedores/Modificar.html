@@ -3,11 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>StockVendorVision</title>
+    <title>ModificarVendorVision</title>
     <script src="../js/color-modes.js"></script>
     <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="icon" href="../img/Logo ZENIK Simple.svg" type="image/png" />
     <link href="../css/stylesIndex.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/stylesForm.css" />
     <link rel="stylesheet" href="../css/stylesApp.css" />
     <link rel="stylesheet" href="../css/fonts.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -38,18 +39,18 @@
             </li>
             <li class="list-item">
               <a
-                      href="Inicio.html"
-                      class="list-link nav-link text-white"
-                      aria-current="page">
+                href="Inicio.html"
+                class="list-link nav-link text-white"
+                aria-current="page">
                 <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="16"
-                        height="16"
-                        fill="currentColor"
-                        class="bi bi-house"
-                        viewBox="0 0 16 16">
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-house"
+                  viewBox="0 0 16 16">
                   <path
-                          d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5z" />
+                    d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5z" />
                 </svg>
                 Inicio
               </a>
@@ -89,20 +90,20 @@
             </li>
             <li class="list-item">
               <a
-                      href="Proveedores.html"
-                      class="list-link nav-link text-white"
-                      aria-current="page">
+                href="Proveedores.html"
+                class="list-link nav-link text-white"
+                aria-current="page">
                 <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="16"
-                        height="16"
-                        fill="currentColor"
-                        class="bi bi-person-circle"
-                        viewBox="0 0 16 16">
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-person-circle"
+                  viewBox="0 0 16 16">
                   <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
                   <path
-                          fill-rule="evenodd"
-                          d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
+                    fill-rule="evenodd"
+                    d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
                 </svg>
                 Proveedores
               </a>
@@ -113,7 +114,7 @@
             <li class="list-item">
               <a
                       href="Ventas.html"
-                      class="list-link nav-link text-white "
+                      class="list-link nav-link text-white active"
                       aria-current="page">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-receipt" viewBox="0 0 16 16">
                   <path d="M1.92.506a.5.5 0 0 1 .434.14L3 1.293l.646-.647a.5.5 0 0 1 .708 0L5 1.293l.646-.647a.5.5 0 0 1 .708 0L7 1.293l.646-.647a.5.5 0 0 1 .708 0L9 1.293l.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .801.13l.5 1A.5.5 0 0 1 15 2v12a.5.5 0 0 1-.053.224l-.5 1a.5.5 0 0 1-.8.13L13 14.707l-.646.647a.5.5 0 0 1-.708 0L11 14.707l-.646.647a.5.5 0 0 1-.708 0L9 14.707l-.646.647a.5.5 0 0 1-.708 0L7 14.707l-.646.647a.5.5 0 0 1-.708 0L5 14.707l-.646.647a.5.5 0 0 1-.708 0L3 14.707l-.646.647a.5.5 0 0 1-.801-.13l-.5-1A.5.5 0 0 1 1 14V2a.5.5 0 0 1 .053-.224l.5-1a.5.5 0 0 1 .367-.27m.217 1.338L2 2.118v11.764l.137.274.51-.51a.5.5 0 0 1 .707 0l.646.647.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.509.509.137-.274V2.118l-.137-.274-.51.51a.5.5 0 0 1-.707 0L12 1.707l-.646.647a.5.5 0 0 1-.708 0L10 1.707l-.646.647a.5.5 0 0 1-.708 0L8 1.707l-.646.647a.5.5 0 0 1-.708 0L6 1.707l-.646.647a.5.5 0 0 1-.708 0L4 1.707l-.646.647a.5.5 0 0 1-.708 0z"/>
@@ -125,7 +126,7 @@
             <li class="list-item">
               <a
                 href="Modificar.html"
-                class="list-link nav-link text-white"
+                class="list-link nav-link text-white active"
                 aria-current="page">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -146,7 +147,7 @@
             <li class="list-item">
               <a
                 href="Stock.html"
-                class="list-link nav-link text-white active"
+                class="list-link nav-link text-white"
                 aria-current="page">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -213,29 +214,74 @@
 
         <div class="col-md-10" id="panel-derecho">
           <div class="container container-center">
-            <table class="table table-striped table-hover table-bordered">
-              <thead>
-              <tr>
-                <th scope="col">Clave</th>
-                <th scope="col">Producto</th>
-                <th scope="col">Descripción</th>
-                <th scope="col">Caducidad</th>
-                <th scope="col">Tipo producto</th>
-                <th scope="col">Cantidad</th>
-                <th scope="col">Precio</th>
-                <th scope="col">Ganancia</th>
-              </tr>
-              </thead>
-              <tbody id="tabla-stock">
-              <!-- Insertar stock -->
-              </tbody>
-            </table>
+            <h3>Modificar un Producto</h3>
+            <form id="registroForm">
+              <div class="card card-registro bg-dark text-white mb-4">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="clave" class="form-label">Clave del producto a modificar</label>
+                        <input type="number" class="form-control" id="clave" />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <button type="button" id="seleccionarButton" class="btn btn-primary w-100">Seleccionar</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="nombre_Producto" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="nombre_Producto" />
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="caducidad" class="form-label">Caducidad</label>
+                        <input type="date" class="form-control" id="caducidad" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="descripcion" class="form-label">Descripcion</label>
+                        <input type="text" class="form-control" id="descripcion" />
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="precio" class="form-label">Precio</label>
+                        <input type="number" step="0.01" class="form-control" id="precio" />
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="tipo" class="form-label">Tipo producto</label>
+                        <input type="text" class="form-control" id="tipo" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <button type="button" id="cancelarButton" class="btn btn-success w-100">Cancelar</button>
+                    </div>
+                    <div class="col-md-6">
+                      <button type="submit" class="btn btn-primary w-100">Guardar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
           </div>
         </div>
       </div>
     </div>
 
-    <script src="../js/Stock_Gerentes.js"></script>
+    <script src="../js/Modificar_Proveedores.js"></script>
     <script src="../bootstrap/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>
