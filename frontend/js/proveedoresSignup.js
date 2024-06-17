@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (response.ok) {
         const result = await response.json();
         // Redirige al usuario a la página de inicio de sesión
-        window.location.href = "login.js";
+        window.location.href = "login.html";
       } else {
         const errorData = await response.json();
         alert(`Error: ${errorData.message}`);
