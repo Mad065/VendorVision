@@ -110,7 +110,7 @@ padding: 1vw 1vw 0 1vw;
 
 .card--black {
     background-color: #2B3036;
-    border-radius: 8;
+    border-radius: 8px;
 }
 
 .black-border {
@@ -183,7 +183,7 @@ padding: 1vw 1vw 0 1vw;
 }
 
 .footer-link {
-    display: inline-flexbox;
+    display: -ms-inline-flexbox;
 }
 
 .footer-logo {
