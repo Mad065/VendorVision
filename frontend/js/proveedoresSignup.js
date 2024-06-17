@@ -3,11 +3,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const form = document.querySelector("form");
   const dateInput = document.getElementById("birthdate");
 
+  const menorEdad = document.getElementById("menorEdad");
+
   dateInput.addEventListener("blur", () => {
     const birthdate = dateInput.value;
     const edad = calculateAge(new Date(birthdate));
     if (edad < 18) {
-      alert("Debes tener al menos 18 años para registrarte.");
+      menorEdad.innerHTML = "Debes tener al menos 18 años para registrarte.";
     }
   });
 
@@ -39,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Validación de edad
     const edad = calculateAge(new Date(birthdate));
     if (edad < 18) {
-      alert("Debes tener al menos 18 años para registrarte.");
+      menorEdad.innerHTML = "Debes tener al menos 18 años para registrarte.";
       return;
     }
 
@@ -68,7 +70,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (response.ok) {
         const result = await response.json();
-        alert("Usuario registrado exitosamente");
         // Redirige al usuario a la página de inicio de sesión
         window.location.href = "login.js";
       } else {

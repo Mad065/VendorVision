@@ -3,6 +3,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const emailInput = document.getElementById("correoE");
   let isEmailValid = false;
 
+  const correoDisponible = document.getElementById("correoDisponible");
+
   emailInput.addEventListener("blur", async () => {
     const email = emailInput.value;
     if (email) {
@@ -18,10 +20,10 @@ document.addEventListener("DOMContentLoaded", () => {
         if (response.ok) {
           const result = await response.json();
           if (result.message === "Correo disponible") {
-            alert(result.message);
+            correoDisponible.innerHTML = "Correo disponible";
             isEmailValid = true;
           } else {
-            alert(result.message);
+            correoDisponible.innerHTML = "Correo no disponible";
             isEmailValid = false;
           }
         } else {
@@ -66,10 +68,10 @@ document.addEventListener("DOMContentLoaded", () => {
         if (response.ok) {
           const result = await response.json();
           if (result.message === "Correo disponible") {
-            alert(result.message);
+            correoDisponible.innerHTML = "Correo disponible";
             isEmailValid = true;
           } else {
-            alert(result.message);
+            correoDisponible.innerHTML = "Correo no disponible";
             isEmailValid = false;
           }
         } else {
@@ -85,7 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     // Verificar si el correo es válido
     if (!isEmailValid) {
-      alert("El correo electrónico no es válido o ya está registrado.");
+      correoDisponible.innerHTML = "Correo no disponible";
       return;
     }
 

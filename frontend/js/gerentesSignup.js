@@ -4,11 +4,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const curpInput = document.getElementById("CURP");
   let isCURPValid = false;
 
+  const menorEdad = document.getElementById("menorEdad");
+  const curpValido = document.getElementById("curpValido");
+
   dateInput.addEventListener("blur", () => {
     const birthdate = dateInput.value;
     const edad = calculateAge(new Date(birthdate));
     if (edad < 18) {
-      alert("Debes tener al menos 18 años para registrarte.");
+      menorEdad.innerHTML = "Debes tener al menos 18 años para registrarte.";
     }
   });
 
@@ -27,10 +30,10 @@ document.addEventListener("DOMContentLoaded", () => {
         if (response.ok) {
           const result = await response.json();
           if (result.message === "CURP disponible") {
-            alert(result.message);
+            curpValido.innerHTML = "El CURP es válido.";
             isCURPValid = true;
           } else {
-            alert(result.message);
+            curpValido.innerHTML = "El CURP no es válido.";
             isCURPValid = false;
           }
         } else {
@@ -74,14 +77,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (!isCURPValid) {
-      alert("El CURP no es válido o ya está registrado");
+      curpValido.innerHTML = "El CURP no es válido.";
       return;
     }
 
     // Validación de edad
     const edad = calculateAge(new Date(birthdate));
     if (edad < 18) {
-      alert("Debes tener al menos 18 años para registrarte.");
+      menorEdad.innerHTML = "Debes tener al menos 18 años para registrarte.";
       return;
     }
 
@@ -112,7 +115,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (response.ok) {
         const result = await response.json();
-        alert("Usuario registrado exitosamente");
         // Redirige al usuario a la página de inicio de sesión
         window.location.href = "login.js";
       } else {

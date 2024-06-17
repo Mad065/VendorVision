@@ -10,13 +10,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (window.location.pathname.startsWith("/gerentes") && accountType !== "gerente") {
         alert("No tienes permiso para acceder a esta página.");
-        window.location.href = "/unauthorized.html"; // Redirige a una página de acceso no autorizado
+        window.location.href = "/noAutorizado.html"; // Redirige a una página de acceso no autorizado
         return;
     }
 
     if (window.location.pathname.startsWith("/proveedores") && accountType !== "proveedor") {
         alert("No tienes permiso para acceder a esta página.");
-        window.location.href = "/unauthorized.html"; // Redirige a una página de acceso no autorizado
+        window.location.href = "/noAutorizado.html"; // Redirige a una página de acceso no autorizado
         return;
     }
 });
