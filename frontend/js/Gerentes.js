@@ -1,13 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   const token = localStorage.getItem("token");
 
-  if (!token) {
-    alert("Por favor, inicia sesión primero.");
-    // Redirige al usuario a la página de inicio de sesión
-    window.location.href = "/login.html";
-    return;
-  }
-
   // Realizar una solicitud GET a la API para obtener los datos de los gerentes
   fetch("/api/obtener-gerentes", {
     method: "GET",
@@ -41,13 +34,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 </div>
                 <div class="col-md-8">
                   <div class="card-body">
-                    <h5 class="card-title">${gerente.nombre_Gerente} ${gerente.apellidos}</h5>
-                    <p class="card-text">
+                    <h5 class="card-title text-white">${gerente.nombre_Gerente} ${gerente.apellidos}</h5>
+                    <p class="card-text text-white">
                       Edad: ${gerente.edad} años<br />
                       Fecha de nacimiento: ${gerente.fechaNac}<br />
                       ...
                     </p>
-                    <p class="card-text">
+                    <p class="card-text text-white">
                       <small class="text-body-secondary">Correo electrónico: ${gerente.correoE}</small>
                     </p>
                   </div>

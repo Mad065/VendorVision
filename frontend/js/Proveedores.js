@@ -1,13 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     const token = localStorage.getItem("token");
 
-    if (!token) {
-        alert("Por favor, inicia sesión primero.");
-        // Redirige al usuario a la página de inicio de sesión
-        window.location.href = "/login.html";
-        return;
-    }
-
     // Realizar una solicitud GET a la API para obtener los datos de los proveedores
     fetch("/api/obtener-proveedores", {
         method: "GET",
@@ -41,13 +34,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 </div>
                 <div class="col-md-8">
                   <div class="card-body">
-                    <h5 class="card-title">${proveedor.nombre_Proveedor} ${proveedor.apellido_Proveedor}</h5>
-                    <p class="card-text">
+                    <h5 class="card-title text-white">${proveedor.nombre_Proveedor} ${proveedor.apellido_Proveedor}</h5>
+                    <p class="card-text text-white">
                       Empresa: ${proveedor.nombre_Empresa}<br />
                       Dirección: ${proveedor.direccion}<br />
                       ...
                     </p>
-                    <p class="card-text">
+                    <p class="card-text text-white">
                       <small class="text-body-secondary">Correo electrónico: ${proveedor.correoE}</small>
                       <br />
                       Cantidad de pedidos: ${proveedor.cantidad_pedidos}

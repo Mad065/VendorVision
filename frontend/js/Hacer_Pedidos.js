@@ -8,12 +8,6 @@ document.addEventListener("DOMContentLoaded", () => {
     let cantidadTotal = 0;
     let subtotal = 0;
 
-    if (!token) {
-        alert("Por favor, inicia sesión primero.");
-        window.location.href = "/login.html";
-        return;
-    }
-
     form.addEventListener("submit", async (event) => {
         event.preventDefault();
 

@@ -196,6 +196,27 @@ router.post("/proveedoressignup", async (req, res) => {
   }
 });
 
+// obtener nombre de usuario
+// Endpoint para obtener el nombre de usuario
+router.get('/get-username', verifyToken, (req, res) => {
+  const email = req.query.email;
+
+  const query = 'SELECT nombre_Usuario FROM Usuario WHERE correoE = ?';
+
+  conexion.query(query, [email], (err, results) => {
+    if (err) {
+      console.error('Error al obtener el nombre de usuario:', err);
+      return res.status(500).json({ message: 'Error en el servidor' });
+    }
+
+    if (results.length > 0) {
+      return res.status(200).json({ nombreUsuario: results[0].nombre_Usuario });
+    } else {
+      return res.status(404).json({ message: 'Usuario no encontrado' });
+    }
+  });
+});
+
 // Verificar si el correo ya está registrado
 router.post("/correo-disponible", (req, res) => {
   const { correoE } = req.body;
@@ -521,7 +542,7 @@ router.get("/obtener-proveedores", verifyToken, (req, res) => {
 });
 
 // Hacer pedido
-router.post("/hacer_pedido", async (req, res) => {
+router.post("/hacer_pedido", verifyToken, async (req, res) => {
   try {
     // Aquí recibes los detalles del pedido desde el cuerpo de la solicitud
     const {

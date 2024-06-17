@@ -114,7 +114,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const result = await response.json();
         alert("Usuario registrado exitosamente");
         // Redirige al usuario a la página de inicio de sesión
-        window.location.href = "/gerentes/Inicio.html";
+        window.location.href = "login.js";
       } else {
         const errorData = await response.json();
         alert(`Error: ${errorData.message}`);

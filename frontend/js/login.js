@@ -30,6 +30,24 @@ document.addEventListener("DOMContentLoaded", () => {
           console.log("Token guardado en localStorage");
         }
 
+        // Obtener nombre de usuario y almacenarlo en localStorage
+        const usernameResponse = await fetch(`/api/get-username?email=${encodeURIComponent(email)}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${result.token}`,
+          },
+        });
+
+        if (usernameResponse.ok) {
+          const usernameResult = await usernameResponse.json();
+          localStorage.setItem("nombre_Usuario", usernameResult.nombreUsuario);
+          console.log("Nombre de usuario guardado en localStorage");
+        } else {
+          const errorData = await usernameResponse.json();
+          console.error(`Error al obtener el nombre de usuario: ${errorData.message}`);
+        }
+
         // Verificar el rol del usuario
         const roleResponse = await fetch(`/api/check-role?email=${encodeURIComponent(email)}`, {
           method: "GET",
@@ -43,6 +61,10 @@ document.addEventListener("DOMContentLoaded", () => {
           const roleResult = await roleResponse.json();
           const userRole = roleResult.role;
 
+          localStorage.setItem("correoE", email);
+          localStorage.setItem("contraseña", password);
+          localStorage.setItem("account-type", userRole);
+
           if (userRole === "gerente") {
             window.location.href = "/gerentes/Inicio.html";
           } else if (userRole === "proveedor") {
@@ -54,6 +76,9 @@ document.addEventListener("DOMContentLoaded", () => {
           const errorData = await roleResponse.json();
           alert(`Error al verificar el rol: ${errorData.message}`);
         }
+
+
+
       } else {
         const errorData = await response.json();
         alert(`Error: ${errorData.message}`);

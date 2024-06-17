@@ -8,12 +8,6 @@ document.addEventListener("DOMContentLoaded", () => {
   let subtotal = 0;
   let productosSeleccionados = []; // Lista de productos seleccionados
 
-  if (!token) {
-    alert("Por favor, inicia sesión primero.");
-    window.location.href = "/login.html";
-    return;
-  }
-
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
 
