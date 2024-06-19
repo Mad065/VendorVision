@@ -389,8 +389,8 @@ router.get("/productos", verifyToken, (req, res) => {
 });
 
 // Obtener stock de proveedores
-router.get("/stock-proveedor", verifyToken, (req, res) => {
-  const correoE = req.query;
+router.get("/stock-proveedor", (req, res) => {
+  const { correoE } = req.query;
 
   if (!correoE) {
     return res.status(400).json({ message: "Se requiere el correo electrónico del proveedor" });
@@ -413,8 +413,8 @@ router.get("/stock-proveedor", verifyToken, (req, res) => {
 });
 
 // Obtener stock de gerente
-router.get("/stock-gerente", verifyToken, (req, res) => {
-  const correoE = req.query.correoE;
+router.get("/stock-gerente", (req, res) => {
+  const { correoE } = req.query.correoE;
 
   if (!correoE) {
     return res.status(400).json({ message: "Se requiere el correo electrónico del gerente" });
